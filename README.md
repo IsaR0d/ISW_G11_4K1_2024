@@ -37,7 +37,7 @@ ISW-G11-4K1-2024
 | Modalidad académica | `ISW_MA_2024.pdf` | `/` |
 | Bibliografía | `ISW_Biblio_<Tema>_<NombreLibro>.pdf` | `/Material/Bibliografía/` |
 | PPT | `ISW_PPT<N>_<NombrePPT>.pdf` | `/Material/PPTs de clase/`
-| Template | `ISW_Template_<NombreTemplate>.pdf` | `/Material/Templates/` |
+| Template | `ISW_Template_<NombreTemplate>.ext` | `/Material/Templates/` |
 | Consigna TP | `ISW_TP<N>_Consigna.pdf` | `/Práctico/Trabajos Prácticos/TP<N>/`
 | Entregable TP | `ISW_4K1_G11_TP<N>.<ext>` | `/Práctico/Trabajos Prácticos/TP<N>/`
 | Ejercicio | `ISW_Ejercicio_<NombreEjercicio>.<ext>` | `/Práctico/Ejercicios/` |
@@ -73,6 +73,3 @@ Una vez que se haya completado y revisado un Trabajo Práctico o parcial, se fij
     
     Todos los documentos deben haber pasado una revisión para garantizar que estén completos y correctamente versionados.
 
-4. **Accesibilidad Garantizada**
-
-    Todos los integrantes del grupo deben tener acceso garantizado al repositorio y a todos los recursos y herramientas necesarias para el desarrollo del curso.
