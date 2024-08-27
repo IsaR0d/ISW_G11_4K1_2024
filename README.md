@@ -74,5 +74,3 @@ Una vez que se haya completado y revisado un Trabajo Práctico o parcial, se fij
 3. **Verificación de Documentación**
     
     Todos los documentos deben haber pasado una revisión para garantizar que estén completos y correctamente versionados.
-
->>>>>>> 4d0586ad425f9ba669ad7d7bcd5e2c75e529d519
