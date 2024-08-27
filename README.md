@@ -30,7 +30,7 @@ ISW-G11-4K1-2024
 ### Descripción
 1. **Material**: Contiene recursos de apoyo proporcionados por la cátedra.
 2. **Práctico**: Contiene todos los trabajos prácticos desarrollados por el grupo y ejercicios resueltos.
-3. **Notas de clase**: Incluye notas oOmadas durante las clases.
+3. **Notas de clase**: Incluye notas tomadas durante las clases.
 
 ## Reglas de nombrado
 | Ítem de configuración | Regla de nombrado | Ubicación |
