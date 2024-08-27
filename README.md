@@ -39,7 +39,7 @@ ISW-G11-4K1-2024
 | Modalidad académica | `ISW_MA_2024.pdf` | `/` |
 | Bibliografía | `ISW_Biblio_<Tema>_<NombreLibro>.pdf` | `/Material/Bibliografía/` |
 | PPT | `ISW_PPT<N>_<NombrePPT>.pdf` | `/Material/PPTs de clase/`
-| Template | `ISW_Template_<NombreTemplate>.ext` | `/Material/Templates/` |
+| Template | `ISW_Template_<NombreTemplate>.<ext>` | `/Material/Templates/` |
 | Consigna TP | `ISW_TP<N>_Consigna.pdf` | `/Práctico/Trabajos Prácticos/TP<N>/`
 | Entregable TP | `ISW_4K1_G11_TP<N>.<ext>` | `/Práctico/Trabajos Prácticos/TP<N>/`
 | Ejercicio | `ISW_Ejercicio_<NombreEjercicio>.<ext>` | `/Práctico/Ejercicios/` |
