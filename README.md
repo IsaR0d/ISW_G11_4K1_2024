@@ -51,7 +51,7 @@ ISW-G11-4K1-2024
 |-------|-------------|
 | `<ext>` | Extensión del archivo (por ejemplo: pdf, docx, etc.) |
 | `<Fecha>` | Fecha en formato YYYY-mm-dd |
-| `<N>` | Número secuencial empezado en 0 |
+| `<N>` | Número secuencial empezado en 1 |
 | `<NombreEjercicio>` | Nombre que identifica a cada ejercicio |
 | `<NombreLibro>` | Título de la bibliografía |
 | `<NombrePPT>` | Nombre que identifica a cada Filmina |
