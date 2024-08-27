@@ -23,8 +23,8 @@ ISW-G11-4K1-2024
 |   |   ├── TP1
 |   |   └── TP<N>
 |   └── Ejercicios
-├──Cronograma de Clases
-├──Modalidad Academica
+├── Cronograma de Clases
+├── Modalidad Academica
 └── Notas de Clase
 ```
 ### Descripción
