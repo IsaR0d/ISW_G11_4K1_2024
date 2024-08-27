@@ -23,6 +23,8 @@ ISW-G11-4K1-2024
 |   |   ├── TP1
 |   |   └── TP<N>
 |   └── Ejercicios
+├──Cronograma de Clases
+├──Modalidad Academica
 └── Notas de Clase
 ```
 ### Descripción
@@ -33,7 +35,7 @@ ISW-G11-4K1-2024
 ## Reglas de nombrado
 | Ítem de configuración | Regla de nombrado | Ubicación |
 |-----------------------|-------------------|-----------|
-| Cronograma de clases | `ISW_CC_4K1_2024.pdf` | `/` |
+| Cronograma de clases | `ISW_CC_4K1_2024.xlsx` | `/` |
 | Modalidad académica | `ISW_MA_2024.pdf` | `/` |
 | Bibliografía | `ISW_Biblio_<Tema>_<NombreLibro>.pdf` | `/Material/Bibliografía/` |
 | PPT | `ISW_PPT<N>_<NombrePPT>.pdf` | `/Material/PPTs de clase/`
