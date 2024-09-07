@@ -1,4 +1,3 @@
-// src/components/Tarjeta.jsx
 import React from 'react';
 
 const Tarjeta = () => {

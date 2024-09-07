@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import Layout from '../components/Layout'; // Ajusta la ruta según tu estructura
-import Chip from '../components/Chip'; // Ajusta la ruta según tu estructura
-import Estrellas from '../components/Estrellas'; // Ajusta la ruta según tu estructura
-import { CalendarIcon, TruckIcon } from '@heroicons/react/24/outline';
+import Layout from '../components/Layout';
+import Chip from '../components/Chip';
+import Estrellas from '../components/Estrellas';
+import { CalendarIcon } from '@heroicons/react/24/outline';
 
 const DetallesCotizacion = () => {
     const { idPedido, idCotizacion } = useParams();
@@ -18,16 +18,16 @@ const DetallesCotizacion = () => {
         const fetchCotizacion = async () => {
             try {
                 const response = await axios.get(`http://localhost:4000/api/pedido=${idPedido}&cotizacion=${idCotizacion}`);
-                const fetchedPedido = response.data.pedido; // Extrae el pedido de la respuesta
-                const fetchedCotizacion = response.data.cotizacion; // Extrae la cotización de la respuesta
+                const fetchedPedido = response.data.pedido;
+                const fetchedCotizacion = response.data.cotizacion;
 
                 // Verifica si el pedido ya está confirmado
                 if (fetchedPedido.estado === 'Confirmada') {
                     navigate('/error', { state: {
                         mensaje: `El pedido #ID${fetchedPedido.id} ya tiene un transportista seleccionado.`,
                         icono: "truck"
-                    } }); // Redirige a la pantalla de error con un mensaje
-                    return; // Detén la ejecución si ya está confirmado
+                    } });
+                    return;
                 }
 
                 setCotizacion(fetchedCotizacion);
@@ -36,8 +36,8 @@ const DetallesCotizacion = () => {
                 navigate('/error', { state: {
                     mensaje: `El pedido #ID${idPedido} o la cotización #ID${idCotizacion} no existen.`,
                     icono: "sad"
-                } }); // Redirige a la pantalla de error con un mensaje
-                return; // Detén la ejecución si ya está confirmado
+                } });
+                return;
             } finally {
                 setLoading(false);
             }
@@ -62,13 +62,12 @@ const DetallesCotizacion = () => {
     return (
         <Layout footerType={"default"} headerType={"default"}>
             <div className="container mx-auto p-4 mb-20">
-                {/* Texto para Web */}
-                {/* Texto para Mobile (solo en dispositivos móviles) */}
-                <div className="p-4 text-center mb-4">
+                <div className="p-2 text-center mb-2">
                     <h1 className="text-xl font-bold">Cotización #{cotizacion.id}</h1>
                 </div>
                 
                 <div className="flex flex-wrap gap-4 justify-center mt-8">
+
                     {/* Elemento 1: Precio */}
                     <div className="bg-white rounded-lg shadow-lg p-4 max-w-sm w-full">
                         <div className="text-gray-600 text-sm mb-4">Pago</div>
@@ -82,37 +81,37 @@ const DetallesCotizacion = () => {
                         </div>
                     </div>
 
-                {/* Elemento 2: Envío */}
-                <div className="bg-white rounded-lg shadow-lg p-4 max-w-sm w-full">
-                    <div className="text-gray-600 text-sm mb-4">Envío</div>
-                    <div className="mt-2">
-                        {/* Retiro */}
-                        <div className="flex flex-col mt-2">
-                            <div className="text-black text-sm font-semibold mb-2">Retiro</div>
-                            <div className="flex items-center">
-                                <CalendarIcon className="w-5 h-5 text-gray-600" />
-                                <span className="text-black text-md font-bold ml-2">
-                                    {cotizacion.retiro_fecha || pedido.retiro_fecha}
-                                </span>
+                    {/* Elemento 2: Envío */}
+                    <div className="bg-white rounded-lg shadow-lg p-4 max-w-sm w-full">
+                        <div className="text-gray-600 text-sm mb-4">Envío</div>
+                        <div className="mt-2">
+                            {/* Retiro */}
+                            <div className="flex flex-col mt-2">
+                                <div className="text-black text-sm font-semibold mb-2">Retiro</div>
+                                <div className="flex items-center">
+                                    <CalendarIcon className="w-5 h-5 text-gray-600" />
+                                    <span className="text-black text-md font-bold ml-2">
+                                        {cotizacion.retiro_fecha || pedido.retiro_fecha}
+                                    </span>
+                                </div>
+                                <div className="text-gray-600 text-sm mt-1">{pedido.retiro_direccion}</div>
                             </div>
-                            <div className="text-gray-600 text-sm mt-1">{pedido.retiro_direccion}</div>
-                        </div>
 
-                        <hr className="my-2" />
+                            <hr className="my-2" />
 
-                        {/* Entrega */}
-                        <div className="flex flex-col mt-2">
-                            <div className="text-black text-sm font-semibold mb-2">Entrega</div>
-                            <div className="flex items-center">
-                                <CalendarIcon className="w-5 h-5 text-gray-600" />
-                                <span className="text-black text-md font-bold ml-2">
-                                    {cotizacion.entrega_fecha || pedido.entrega_fecha}
-                                </span>
+                            {/* Entrega */}
+                            <div className="flex flex-col mt-2">
+                                <div className="text-black text-sm font-semibold mb-2">Entrega</div>
+                                <div className="flex items-center">
+                                    <CalendarIcon className="w-5 h-5 text-gray-600" />
+                                    <span className="text-black text-md font-bold ml-2">
+                                        {cotizacion.entrega_fecha || pedido.entrega_fecha}
+                                    </span>
+                                </div>
+                                <div className="text-gray-600 text-sm mt-1">{pedido.entrega_direccion}</div>
                             </div>
-                            <div className="text-gray-600 text-sm mt-1">{pedido.entrega_direccion}</div>
                         </div>
                     </div>
-                </div>
 
                     {/* Elemento 3: Transportista */}
                     <div className="bg-white rounded-lg shadow-lg p-4 max-w-sm w-full">
@@ -132,7 +131,7 @@ const DetallesCotizacion = () => {
                 {/* Botón Confirmar Ahora */}
                 <div className="flex justify-center mt-8">
                     <button
-                        className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition w-full max-w-sm"
+                        className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primaryLight transition w-full max-w-sm"
                         onClick={handleConfirmar}
                     >
                         Confirmar ahora

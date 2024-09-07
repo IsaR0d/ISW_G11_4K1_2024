@@ -1,4 +1,3 @@
-// src/components/Estrellas.jsx
 import React from 'react';
 
 const Estrellas = ({ rating, cantidadResenas }) => {

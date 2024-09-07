@@ -1,4 +1,3 @@
-// src/components/Error.jsx
 import React from 'react';
 import Layout from '../components/Layout';
 import { TruckIcon, FaceFrownIcon } from '@heroicons/react/24/outline';

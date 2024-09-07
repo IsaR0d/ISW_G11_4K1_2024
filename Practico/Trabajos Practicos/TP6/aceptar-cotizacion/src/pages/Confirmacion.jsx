@@ -1,6 +1,5 @@
-// src/components/Confirmacion.jsx
-import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { ArrowLeftIcon, CalendarIcon } from '@heroicons/react/24/outline';
 import Modal from '../components/Modal';
 import { procesarPago } from '../services/procesarPago';
@@ -48,8 +47,7 @@ const Confirmacion = () => {
             }
     
             const data = await response.json();
-    
-            // Consolidar todo el contenido del modal en un solo objeto
+
             setModalContent({
                 nombreImagen: "Success",
                 titulo: isTarjeta ? '¡Pago exitoso!' : 'Cotización confirmada',
@@ -79,7 +77,7 @@ const Confirmacion = () => {
 
     return (
         <div className='min-h-screen bg-white'>
-            <div className="bg-blue-800 text-white">
+            <div className="bg-primary text-white">
                 {/* Header */}
                 <header className="flex items-center p-4">
                     <button
@@ -92,8 +90,10 @@ const Confirmacion = () => {
 
                 <div className="p-4">
                     <h1 className="text-white text-center text-xl font-light flex-grow">Confirma la cotización</h1>
+
                     {/* Detalles */}
                     <div className="p-6 pb-0">
+
                         {/* Retiro */}
                         <div className="border-t border-white border-opacity-20 py-4">
                             <div className="flex items-center justify-between text-white text-sm mb-4">
@@ -104,6 +104,7 @@ const Confirmacion = () => {
                                 </div>
                             </div>
                         </div>
+
                         {/* Entrega */}
                         <div className="border-t border-white border-opacity-20 py-4">
                             <div className="flex items-center justify-between text-white text-sm mb-4">
@@ -114,6 +115,7 @@ const Confirmacion = () => {
                                 </div>
                             </div>
                         </div>
+
                         {/* Pago */}
                         <div className="border-t border-white border-opacity-20 py-4">
                             <div className="flex items-center justify-between text-white text-sm">
@@ -121,17 +123,20 @@ const Confirmacion = () => {
                                 <span className="text-2xl font-bold">{cotizacion?.precio ? `$${cotizacion.precio}` : 'N/A'}</span>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
+
             <div className="flex justify-center mt-4 p-4">
                 <button
-                    className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition w-full max-w-sm"
+                    className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primaryLight transition w-full max-w-sm"
                     onClick={handleConfirmar}
                 >
                     {loading ? 'Confirmando...' : 'Confirmar'}
                 </button>
             </div>
+
             {isModalOpen && <Modal {...modalContent} onClose={() => setModalOpen(false)} />}
         </div>
     );

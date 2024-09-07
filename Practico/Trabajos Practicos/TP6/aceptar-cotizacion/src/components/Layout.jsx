@@ -1,4 +1,3 @@
-// src/components/MainLayout.jsx
 import React from 'react';
 import {
     ArrowLeftIcon,
@@ -15,7 +14,7 @@ const Layout = ({ children, footerType, headerType }) => {
             {/* Header */}
             <header
                 className={`p-4 flex items-center justify-between ${
-                    headerType === 'default' ? 'bg-blue-600 text-white' : 'bg-transparent'
+                    headerType === 'default' ? 'bg-primary text-white' : 'bg-transparent'
                 }`}
             >
                 {/* Botón de "Back" visible solo en mobile */}
@@ -60,27 +59,27 @@ const Layout = ({ children, footerType, headerType }) => {
 
             {/* Footer dinámico */}
             {footerType === 'default' && (
-                <footer className="bg-white p-2 fixed bottom-0 left-0 right-0 flex justify-around md:hidden"
+                <footer className="bg-white p-2 fixed bottom-0 left-0 right-0 flex justify-around md:hidden pb-5"
                     style={{ boxShadow: '0 -2px 8px rgba(0, 0, 0, 0.05)' }}
                 >
-                    <button className="flex flex-col items-center text-gray-700 w-1/5">
+                    <button className="flex flex-col items-center text-gray-400 w-1/5">
                         <ClipboardDocumentListIcon className="h-6 w-6" />
-                        <span className="text-xs">Mis pedidos</span>
+                        
                     </button>
-                    <button className="flex flex-col items-center text-gray-700 w-1/5">
+                    <button className="flex flex-col items-center text-gray-400 w-1/5">
                         <MapPinIcon className="h-6 w-6" />
-                        <span className="text-xs">Mapa</span>
+                        
                     </button>
-                    <button className="flex flex-col items-center text-blue-500 w-1/5">
+                    <button className="flex flex-col items-center text-primary w-1/5">
                         <PlusIcon className="h-10 w-10 bg-white rounded-full -mt-4 border-4 border-white shadow-lg" />
                     </button>
-                    <button className="flex flex-col items-center text-gray-700 w-1/5">
+                    <button className="flex flex-col items-center text-gray-400 w-1/5">
                         <BellAlertIcon className="h-6 w-6" />
-                        <span className="text-xs">Notificaciones</span>
+                        
                     </button>
-                    <button className="flex flex-col items-center text-gray-700 w-1/5">
+                    <button className="flex flex-col items-center text-gray-400 w-1/5">
                         <UserCircleIcon className="h-6 w-6" />
-                        <span className="text-xs">Mi perfil</span>
+                        
                     </button>
                 </footer>
             )}
@@ -96,7 +95,7 @@ const Layout = ({ children, footerType, headerType }) => {
                         Anterior
                     </button>
                     <button
-                        className="text-blue-500 mr-4 font-semibold"
+                        className="text-primary mr-4 font-semibold"
                     >
                         Siguiente
                     </button>

@@ -1,4 +1,3 @@
-// src/components/MetodoPago.jsx
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CreditCardIcon, CurrencyDollarIcon, ChevronRightIcon } from '@heroicons/react/24/outline';

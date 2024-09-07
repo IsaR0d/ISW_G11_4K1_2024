@@ -1,4 +1,3 @@
-// src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useParams, Navigate } from 'react-router-dom';
 import DetallesCotizacion from './pages/DetallesCotizacion';
@@ -16,7 +15,6 @@ const App = () => {
       <Route path="/tarjeta" element={<Tarjeta />} />
       <Route path="/confirmacion" element={<Confirmacion />} />
       <Route path="/error" element={<Error />} />
-      {/*<Route path="*" element={<Error />} />*/}
       </Routes>
     </Router>
   );
