@@ -52,11 +52,11 @@ const MetodoPago = () => {
                 </div>
             </div>
             {/* Footer */}
-            <footer className="bg-white p-4 fixed bottom-0 left-0 right-0 flex justify-between items-center"
+            <footer className="bg-white p-2 fixed bottom-0 left-0 right-0 flex justify-between pb-4"
                 style={{ boxShadow: '0 -2px 8px rgba(0, 0, 0, 0.05)' }}
             >
-                <span className="text-black font-semibold text-xl">Pagás</span>
-                <span className="text-black font-bold text-xl">{cotizacion?.precio ? `$${cotizacion.precio}` : 'N/A'}</span>
+                <span className="text-gray-500 ml-4 font-semibold">Pagás</span>
+                <span className="text-gray-500 mr-4 font-semibold">{cotizacion?.precio ? `$${cotizacion.precio}` : 'N/A'}</span>
             </footer>
         </Layout>
     );

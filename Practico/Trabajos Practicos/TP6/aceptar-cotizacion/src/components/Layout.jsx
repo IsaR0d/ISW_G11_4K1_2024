@@ -85,7 +85,7 @@ const Layout = ({ children, footerType, headerType }) => {
             )}
 
             {footerType === 'simple' && (
-                <footer className="bg-white p-2 fixed bottom-0 left-0 right-0 flex justify-between"
+                <footer className="bg-white p-2 fixed bottom-0 left-0 right-0 flex justify-between pb-4"
                     style={{ boxShadow: '0 -2px 8px rgba(0, 0, 0, 0.05)' }}
                 >
                     <button

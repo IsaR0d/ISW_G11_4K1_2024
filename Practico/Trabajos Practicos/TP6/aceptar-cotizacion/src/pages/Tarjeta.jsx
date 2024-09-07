@@ -1,11 +1,19 @@
 import React from 'react';
+import Layout from '../components/Layout';
 
 const Tarjeta = () => {
     return (
-        <div>
-        <h1>Pago con Tarjeta</h1>
-        {/* Contenido del formulario de tarjeta */}
-        </div>
+        <Layout footerType={"simple"}>
+            <div className="max-h-screen p-8">
+                <h1 className="text-1xl font-semibold text-black mb-8">Ingresá los datos de tu tarjeta</h1>
+
+                {/* Inputs */}
+                <div>
+
+                </div>
+            </div>
+
+        </Layout>
     );
 };
 
