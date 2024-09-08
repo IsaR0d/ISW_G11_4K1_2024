@@ -116,6 +116,7 @@
     "retiro_fecha": "Junio 1, 2024",
     "estado": "Pendiente",
     "entrega_direccion": "Calle Verdadera 456, Tucumán",
+    "entrega_fecha": "Junio 10, 2024",
     "precio": null,
     "meotodo_pago": null,
     "transportista": null,

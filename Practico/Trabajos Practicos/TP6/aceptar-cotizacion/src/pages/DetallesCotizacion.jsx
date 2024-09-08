@@ -68,7 +68,7 @@ const DetallesCotizacion = () => {
                 
                 <div className="flex flex-wrap gap-4 justify-center mt-8">
 
-                    {/* Elemento 1: Precio */}
+                    {/* Precio */}
                     <div className="bg-white rounded-lg shadow-lg p-4 max-w-sm w-full">
                         <div className="text-gray-600 text-sm mb-4">Pago</div>
                         <div className='flex flex-col justify-center'>
@@ -81,7 +81,7 @@ const DetallesCotizacion = () => {
                         </div>
                     </div>
 
-                    {/* Elemento 2: Envío */}
+                    {/* Envío */}
                     <div className="bg-white rounded-lg shadow-lg p-4 max-w-sm w-full">
                         <div className="text-gray-600 text-sm mb-4">Envío</div>
                         <div className="mt-2">
@@ -113,7 +113,7 @@ const DetallesCotizacion = () => {
                         </div>
                     </div>
 
-                    {/* Elemento 3: Transportista */}
+                    {/* Transportista */}
                     <div className="bg-white rounded-lg shadow-lg p-4 max-w-sm w-full">
                         <div className="text-gray-600 text-sm mb-4">Transportista</div>
                         <div className='ml-4 flex flex-col justify-center'>
@@ -128,7 +128,7 @@ const DetallesCotizacion = () => {
                     </div>
                 </div>
 
-                {/* Botón Confirmar Ahora */}
+                {/* Confirmar */}
                 <div className="flex justify-center mt-8">
                     <button
                         className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primaryLight transition w-full max-w-sm"
