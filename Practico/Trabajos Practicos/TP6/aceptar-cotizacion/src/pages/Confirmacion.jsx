@@ -61,7 +61,7 @@ const Confirmacion = () => {
                 accionBotonSecundario: () => console.log([data.transportista.nro_telefono, data.transportista.mail]),
             });
 
-            await enviarCorreoConfirmacion("Hola");
+            await enviarCorreoConfirmacion(`Su cotización para el pedido #ID${data.id} fue aceptada. Método de pago seleccionado: ${metodo}.`);
     
         } catch (error) {
             setModalContent({

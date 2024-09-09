@@ -8,7 +8,7 @@ const app = express();
 app.use(cors());
 const port = process.env.PORT || 5000;
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+sgMail.setApiKey("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");
 
 app.use(bodyParser.json());
 
