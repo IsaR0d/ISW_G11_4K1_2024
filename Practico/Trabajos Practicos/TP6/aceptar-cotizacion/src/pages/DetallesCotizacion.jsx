@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import Layout from '../components/Layout';
+import Layout from '../layout/Layout';
 import Chip from '../components/Chip';
 import Estrellas from '../components/Estrellas';
 import { CalendarIcon } from '@heroicons/react/24/outline';

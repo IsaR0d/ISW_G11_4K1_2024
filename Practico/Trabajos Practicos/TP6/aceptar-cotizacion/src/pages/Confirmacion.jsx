@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { ArrowLeftIcon, CalendarIcon } from '@heroicons/react/24/outline';
 import Modal from '../components/Modal';
 import { procesarPago } from '../services/procesarPago';
+import { enviarCorreoConfirmacion } from '../services/mail';
 
 const Confirmacion = () => {
     const { state } = useLocation();
@@ -59,6 +60,8 @@ const Confirmacion = () => {
                 textoBotonSecundario: 'Contactar con el transportista',
                 accionBotonSecundario: () => console.log([data.transportista.nro_telefono, data.transportista.mail]),
             });
+
+            await enviarCorreoConfirmacion("Hola");
     
         } catch (error) {
             setModalContent({

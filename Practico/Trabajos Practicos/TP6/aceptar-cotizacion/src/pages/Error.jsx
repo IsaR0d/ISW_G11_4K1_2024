@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from '../components/Layout';
+import Layout from '../layout/Layout';
 import { TruckIcon, FaceFrownIcon } from '@heroicons/react/24/outline';
 import { useLocation } from 'react-router-dom';
 

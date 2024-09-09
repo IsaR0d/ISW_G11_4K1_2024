@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Layout from '../components/Layout';
+import Layout from '../layout/Layout';
 import { useLocation, useNavigate } from 'react-router-dom';
 import "react-credit-cards-2/dist/es/styles-compiled.css";
 import Cards from "react-credit-cards-2";

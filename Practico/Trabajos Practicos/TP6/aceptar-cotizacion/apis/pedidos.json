@@ -4,19 +4,12 @@
     "observacion": "Frágil",
     "tipo_de_carga": "Electrónica",
     "retiro_direccion": "San Martín 789, Rosario",
-    "retiro_fecha": "Abril 25, 2024",
-    "estado": "Confirmada",
+    "retiro_fecha": "24/09/2024",
+    "estado": "Pendiente",
     "entrega_direccion": "Colón 234, Córdoba",
-    "transportista": {
-      "nombre": "María",
-      "apellido": "Fernandez",
-      "rating": 4.8,
-      "cantidad_resenas": 120,
-      "nro_telefono": "+54 9 351 123 4567",
-      "mail": "maria.fernandez@gmail.com"
-    },
-    "meotodo_pago": "Tarjeta de débito",
-    "precio": 4000,
+    "transportista": null,
+    "meotodo_pago": null,
+    "precio": null,
     "cotizaciones": [
       {
         "id": 1,
@@ -30,7 +23,7 @@
         },
         "precio": 3500,
         "retiro_fecha": null,
-        "entrega_fecha": "Mayo 2, 2024",
+        "entrega_fecha": "02/10/2024",
         "metodos_pago": [
           "Tarjeta de débito",
           "Contado al retirar"
@@ -47,7 +40,7 @@
           "mail": "maria.fernandez@gmail.com"
         },
         "precio": 4000,
-        "retiro_fecha": "Abril 25, 2024",
+        "retiro_fecha": "25/09/2024",
         "entrega_fecha": null,
         "metodos_pago": [
           "Tarjeta de débito",
@@ -56,16 +49,17 @@
         ]
       }
     ],
-    "entrega_fecha": "Mayo 2, 2024"
+    "entrega_fecha": "02/05/2024"
   },
   {
     "id": 2,
     "observacion": "Pesado",
     "tipo_de_carga": "Muebles",
     "retiro_direccion": "Av. Santa Fe 456, Buenos Aires",
-    "retiro_fecha": "Mayo 5, 2024",
+    "retiro_fecha": "15/09/2024",
     "estado": "Confirmada",
     "entrega_direccion": "Av. Las Heras 789, Mendoza",
+    "entrega_fecha": "06/10/2024",
     "meotodo_pago": "Tarjeta de débito",
     "precio": 3000,
     "transportista": {
@@ -89,7 +83,7 @@
         },
         "precio": 3000,
         "retiro_fecha": null,
-        "entrega_fecha": "Mayo 2, 2024",
+        "entrega_fecha": "10/10/2024",
         "metodos_pago": [
           "Tarjeta de crédito",
           "Contado al retirar"
@@ -106,7 +100,7 @@
           "mail": "maria.fernandez@gmail.com"
         },
         "precio": 5000,
-        "retiro_fecha": "Abril 25, 2024",
+        "retiro_fecha": "20/09/2024",
         "entrega_fecha": null,
         "metodos_pago": [
           "Tarjeta de crédito",
@@ -120,13 +114,20 @@
     "observacion": "Urgente",
     "tipo_de_carga": "Documentos",
     "retiro_direccion": "Calle Falsa 123, Córdoba",
-    "retiro_fecha": "Junio 1, 2024",
-    "estado": "Pendiente",
+    "retiro_fecha": "25/09/2024",
+    "estado": "Confirmada",
     "entrega_direccion": "Calle Verdadera 456, Tucumán",
-    "entrega_fecha": "Junio 10, 2024",
-    "precio": null,
-    "meotodo_pago": null,
-    "transportista": null,
+    "entrega_fecha": "30/09/2024",
+    "precio": 4500,
+    "meotodo_pago": "Contado al retirar",
+    "transportista": {
+      "nombre": "Jorge",
+      "apellido": "Gómez",
+      "rating": 3.9,
+      "cantidad_resenas": 50,
+      "nro_telefono": "+54 9 351 888 9999",
+      "mail": "jorge.gomez@gmail.com"
+    },
     "cotizaciones": [
       {
         "id": 1,
@@ -139,7 +140,7 @@
           "mail": "jorge.gomez@gmail.com"
         },
         "precio": 4500,
-        "retiro_fecha": "Junio 2, 2024",
+        "retiro_fecha": null,
         "entrega_fecha": null,
         "metodos_pago": [
           "Tarjeta de crédito",
@@ -158,7 +159,7 @@
         },
         "precio": 2000,
         "retiro_fecha": null,
-        "entrega_fecha": "Junio 4, 2024",
+        "entrega_fecha": "01/10/2024",
         "metodos_pago": [
           "Tarjeta de crédito",
           "Contado al retirar"

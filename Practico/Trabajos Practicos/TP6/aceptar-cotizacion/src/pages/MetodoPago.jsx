@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CreditCardIcon, CurrencyDollarIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
-import Layout from '../components/Layout';
+import Layout from '../layout/Layout';
 
 const MetodoPago = () => {
     const { state } = useLocation();
