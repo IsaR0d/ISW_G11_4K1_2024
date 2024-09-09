@@ -1,19 +1,21 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ArrowLeftIcon, CalendarIcon } from '@heroicons/react/24/outline';
 import Modal from '../components/Modal';
 import { procesarPago } from '../services/procesarPago';
 
 const Confirmacion = () => {
     const { state } = useLocation();
+    const navigate = useNavigate();
     const { cotizacion, pedido, metodo } = state || {};
     const [isModalOpen, setModalOpen] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
     const [modalContent, setModalContent] = React.useState({});
+    const isTarjeta = metodo.toLowerCase().includes('tarjeta');
+
 
     const handleConfirmar = async () => {
         setLoading(true);
-        const isTarjeta = metodo.toLowerCase().includes('tarjeta');
     
         try {
             if (isTarjeta && !procesarPago()) {
@@ -45,7 +47,7 @@ const Confirmacion = () => {
             if (!response.ok) {
                 throw new Error('Error al confirmar el pedido');
             }
-    
+
             const data = await response.json();
 
             setModalContent({
@@ -82,7 +84,7 @@ const Confirmacion = () => {
                 <header className="flex items-center p-4 pt-10">
                     <button
                         className="text-white"
-                        onClick={() => window.history.back()}
+                        onClick={() => navigate(-1)}
                     >
                         <ArrowLeftIcon className="h-6 w-6" />
                     </button>

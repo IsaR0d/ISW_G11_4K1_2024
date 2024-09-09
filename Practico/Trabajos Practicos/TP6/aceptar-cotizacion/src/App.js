@@ -6,6 +6,7 @@ import Tarjeta from './pages/Tarjeta';
 import Confirmacion from './pages/Confirmacion';
 import Error from './pages/Error';
 import PhoneFrame from './components/PhoneFrame';
+import './App.css';
 
 const App = () => {
   return (

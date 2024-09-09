@@ -24,7 +24,7 @@ const Error = () => {
 
                 {getIcon(icono)}
 
-                <p className="text-lg font-semibold text-center text-black">
+                <p className="text-lg font-semibold p-4 text-center text-black">
                     {mensaje}
                 </p>
             </div>

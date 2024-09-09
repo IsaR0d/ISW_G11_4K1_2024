@@ -14,7 +14,7 @@ const Modal = ({
 
         return (
             <div className="absolute inset-0 bg-black bg-opacity-50 flex items-end justify-center z-50">
-                <div className="bg-white rounded-lg w-80 p-6 relative shadow-lg mb-10">
+                <div className="bg-white rounded-lg w-full p-6 relative shadow-lg m-3 mb-10">
                     <img src={imageSrc} alt={nombreImagen} className="w-40 h-40 mx-auto mb-4" />
                     <h2 className="text-black text-center text-lg font-semibold mt-10 mb-4">{titulo}</h2>
                     <p className="text-gray-500 text-center text-sm mb-2">{descripcion}</p>

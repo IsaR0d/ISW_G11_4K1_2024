@@ -34,7 +34,7 @@ const DetallesCotizacion = () => {
                 setPedido(fetchedPedido);
             } catch (err) {
                 navigate('/error', { state: {
-                    mensaje: `El pedido #ID${idPedido} o la cotización #ID${idCotizacion} no existen.`,
+                    mensaje: err.response?.data?.message || 'Error desconocido',
                     icono: "sad"
                 } });
                 return;
@@ -60,14 +60,9 @@ const DetallesCotizacion = () => {
     };
 
     return (
-        <Layout footerType={"default"} headerType={"default"}>
+        <Layout footerType={"default"} headerType={"default"} title={`Cotización #ID${cotizacion.id}`}>
             <div className="container mx-auto p-4 mb-20">
-                <div className="p-2 text-center mb-2">
-                    <h1 className="text-xl font-bold">Cotización #{cotizacion.id}</h1>
-                </div>
-                
-                <div className="flex flex-wrap gap-4 justify-center mt-8">
-
+                <div className="flex flex-wrap gap-4 justify-center mt-4">
                     {/* Precio */}
                     <div className="bg-white rounded-lg shadow-lg p-4 max-w-sm w-full">
                         <div className="text-gray-600 text-sm mb-4">Pago</div>
@@ -116,7 +111,7 @@ const DetallesCotizacion = () => {
                     {/* Transportista */}
                     <div className="bg-white rounded-lg shadow-lg p-4 max-w-sm w-full">
                         <div className="text-gray-600 text-sm mb-4">Transportista</div>
-                        <div className='ml-4 flex flex-col justify-center'>
+                        <div className='ml-1 flex flex-col justify-center'>
                             <div className="flex mt-2 mb-2">
                                 <img src="/transportista.png" alt="Transportista" className="w-20 h-20 rounded-full" />
                                 <div className="ml-4 flex flex-col justify-center">

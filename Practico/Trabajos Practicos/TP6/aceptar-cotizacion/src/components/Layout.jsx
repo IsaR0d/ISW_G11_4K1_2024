@@ -9,22 +9,25 @@ import {
     PlusIcon,
 } from '@heroicons/react/24/outline';
 
-const Layout = ({ children, footerType, headerType, siguienteAccion }) => {
+const Layout = ({ children, title, footerType, headerType, anteriorAccion, siguienteAccion }) => {
     return (
         <div className="flex flex-col flex-grow h-full w-full bg-gray-100 overflow-hidden md:relative lg: fixed">
         
             {/* Header */}
             <header
                 className={`flex items-center justify-between p-4 pt-10 ${
-                headerType === 'default' ? 'bg-primary text-white' : 'bg-transparent'
+                    headerType === 'default' ? 'bg-primary text-white' : 'bg-transparent'
                 }`}
             >
                 <button
-                className={`block ${headerType === 'default' ? 'text-white' : 'text-black'}`}
-                onClick={() => window.history.back()}
+                    className={`block ${headerType === 'default' ? 'text-white' : 'text-black'}`}
+                    onClick={() => window.history.back()}
                 >
-                <ArrowLeftIcon className="h-6 w-6" />
+                    <ArrowLeftIcon className="h-6 w-6" />
                 </button>
+
+                <p className="flex-grow text-center font-semibold">{title}</p>
+                <div className="w-6"></div>
             </header>
 
             {/* Contenido principal */}
@@ -33,7 +36,7 @@ const Layout = ({ children, footerType, headerType, siguienteAccion }) => {
             {/* Footer */}
             {footerType === 'default' && (
                 <footer
-                    className={`bg-white p-2 flex justify-around pb-5 ${
+                    className={`bg-white p-2 flex justify-around pb-8 ${
                         footerType === 'default' ? 'fixed bottom-0 left-0 right-0' : ''
                     } ${
                         'md:static md:flex md:justify-between'
@@ -59,7 +62,7 @@ const Layout = ({ children, footerType, headerType, siguienteAccion }) => {
             )}
 
             {footerType === "simple" && (
-                <footer className={`bg-white p-2 flex justify-between pb-4 ${
+                <footer className={`bg-white p-2 flex justify-between pb-6 ${
                     footerType === 'simple' ? 'fixed bottom-0 left-0 right-0' : ''
                 } ${
                     'md:static'
@@ -68,7 +71,7 @@ const Layout = ({ children, footerType, headerType, siguienteAccion }) => {
                 >
                     <button
                         className="text-gray-500 ml-4 font-semibold"
-                        onClick={() => window.history.back()}
+                        onClick={anteriorAccion}
                     >
                         Anterior
                     </button>
