@@ -115,19 +115,12 @@
     "tipo_de_carga": "Documentos",
     "retiro_direccion": "Calle Falsa 123, Córdoba",
     "retiro_fecha": "25/09/2024",
-    "estado": "Confirmada",
+    "estado": "Pendiente",
     "entrega_direccion": "Calle Verdadera 456, Tucumán",
     "entrega_fecha": "30/09/2024",
-    "precio": 4500,
-    "meotodo_pago": "Contado al retirar",
-    "transportista": {
-      "nombre": "Jorge",
-      "apellido": "Gómez",
-      "rating": 3.9,
-      "cantidad_resenas": 50,
-      "nro_telefono": "+54 9 351 888 9999",
-      "mail": "jorge.gomez@gmail.com"
-    },
+    "precio": null,
+    "meotodo_pago": null,
+    "transportista": null,
     "cotizaciones": [
       {
         "id": 1,
