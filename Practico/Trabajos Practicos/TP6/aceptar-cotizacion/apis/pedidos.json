@@ -4,12 +4,19 @@
     "observacion": "Frágil",
     "tipo_de_carga": "Electrónica",
     "retiro_direccion": "San Martín 789, Rosario",
-    "retiro_fecha": "Abril 24, 2024",
-    "estado": "Pendiente",
+    "retiro_fecha": "Abril 25, 2024",
+    "estado": "Confirmada",
     "entrega_direccion": "Colón 234, Córdoba",
-    "transportista": null,
-    "meotodo_pago": null,
-    "precio": null,
+    "transportista": {
+      "nombre": "María",
+      "apellido": "Fernandez",
+      "rating": 4.8,
+      "cantidad_resenas": 120,
+      "nro_telefono": "+54 9 351 123 4567",
+      "mail": "maria.fernandez@gmail.com"
+    },
+    "meotodo_pago": "Tarjeta de débito",
+    "precio": 4000,
     "cotizaciones": [
       {
         "id": 1,
