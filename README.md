@@ -23,9 +23,8 @@ ISW-G11-4K1-2024
 |   |   ├── TP1
 |   |   └── TP<N>
 |   └── Ejercicios
-├── Cronograma de Clases
-├── Modalidad Academica
-└── Notas de Clase
+├── Notas de Clase
+└── Trabajos de investigacion
 ```
 ### Descripción
 1. **Material**: Contiene recursos de apoyo proporcionados por la cátedra.
@@ -41,9 +40,9 @@ ISW-G11-4K1-2024
 | PPT | `ISW_PPT<N>_<NombrePPT>.pdf` | `/Material/PPTs de clase/`
 | Template | `ISW_Template_<NombreTemplate>.<ext>` | `/Material/Templates/` |
 | Consigna TP | `ISW_TP<N>_Consigna.pdf` | `/Práctico/Trabajos Prácticos/TP<N>/`
-| Entregable TP | `ISW_4K1_G11_TP<N>.<ext>` | `/Práctico/Trabajos Prácticos/TP<N>/`
-| Ejercicio | `ISW_Ejercicio_<NombreEjercicio>.<ext>` | `/Práctico/Ejercicios/` |
-| Nota de clase | `ISW_NC_<Fecha>.<ext>` | `/Notas de clase/` |
+| Entregable TP | `ISW_4K1_G11_TP<N>.pdf` | `/Práctico/Trabajos Prácticos/TP<N>/`
+| Ejercicio | `ISW_Ejercicio_<NombreEjercicio>.pdf` | `/Práctico/Ejercicios/` |
+| Nota de clase | `ISW_NC_<Fecha>.pdf` | `/Notas de clase/` |
 
 ## Glosario
 
@@ -60,7 +59,7 @@ ISW-G11-4K1-2024
 
 ## Definición de la Línea Base
 ### Momento en el que se definirá una nueva línea base
-Una vez que se haya completado y revisado un Trabajo Práctico o parcial, se fijará una línea base para asegurar que toda la documentación y el código reflejen el estado del cursado en ese momento.
+Una vez que se haya entregado un Trabajo Práctico, se fijará una línea base para asegurar que toda la documentación y el código reflejen el estado del cursado en ese momento.
 
 ### Criterios
 1. **Material actualizado**
