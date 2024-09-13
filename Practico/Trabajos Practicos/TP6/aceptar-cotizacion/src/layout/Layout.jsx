@@ -9,7 +9,7 @@ import {
     PlusIcon,
 } from '@heroicons/react/24/outline';
 
-const Layout = ({ children, title, footerType, headerType, anteriorAccion, siguienteAccion }) => {
+const Layout = ({ children, title, footerType, headerType, anteriorAccion, siguienteAccion, actionEnabled=true }) => {
     return (
         <div className="flex flex-col flex-grow h-full w-full bg-gray-100 overflow-hidden md:relative lg: fixed">
         
@@ -76,8 +76,9 @@ const Layout = ({ children, title, footerType, headerType, anteriorAccion, sigui
                         Anterior
                     </button>
                     <button
-                        className="text-primary mr-4 font-semibold"
+                        className={`text-primary mr-4 font-semibold disabled:text-gray-400 disabled:cursor-not-allowed`}
                         onClick={siguienteAccion}
+                        disabled={!actionEnabled}
                     >
                         Siguiente
                     </button>

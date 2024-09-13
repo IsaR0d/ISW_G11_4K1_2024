@@ -3,7 +3,7 @@ import Layout from '../layout/Layout';
 import { useLocation, useNavigate } from 'react-router-dom';
 import "react-credit-cards-2/dist/es/styles-compiled.css";
 import Cards from "react-credit-cards-2";
-import { validarNumero, getMarca } from '../services/validarTarjeta';
+import { validateNumber, validateName, validateExpiry, validateCvc, validatePin, getMarca } from '../services/validarTarjeta';
 import { procesarPago } from '../services/procesarPago';
 
 
@@ -11,6 +11,15 @@ const Tarjeta = () => {
     const { state } = useLocation();
     const { cotizacion, pedido, metodo } = state || {};
     const [ confirmar, setConfirmar ] = useState(false);
+    const [ validationResults, setValidations ] = useState({
+        number: null,
+        name: null,
+        expiry: null,
+        cvc: null,
+        focus: null,
+        pin: null
+    }
+    );
     const [ volver, setVolver ] = useState(false);
     const navigate = useNavigate();
 
@@ -25,10 +34,29 @@ const Tarjeta = () => {
 
     const [currentStep, setCurrentStep] = useState(0);
     const steps = ["number", "name", "expiry", "cvc", "pin"];
+    const validators = [validateNumber, validateName, validateExpiry, validateCvc, validatePin];
+    const maxAllowedLength = [16, 50, 5, 4, 6];
+    const onlyNumbers = [true, false, false, true, true];
+    
+    
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setValues((prev) => ({ ...prev, [name]: value }));
+
+        console.log(currentStep)
+        if(value.length <= maxAllowedLength[currentStep])
+            {
+                if(onlyNumbers[currentStep] == !isNaN(value)){
+                    setValues((prev) => ({ ...prev, [name]: value }))
+                    let validationResult = validators[currentStep](value);
+                    setValidations((prev) => ({...prev, [name]: validationResult}))
+                }
+                else if (!onlyNumbers[currentStep]) {
+                    setValues((prev) => ({ ...prev, [name]: value }))
+                    let validationResult = validators[currentStep](value);
+                    setValidations((prev) => ({...prev, [name]: validationResult}))
+                }
+            };
     };
 
     const handleInputFocus = (e) => {
@@ -69,8 +97,10 @@ const Tarjeta = () => {
         }
     }, [confirmar, volver, navigate, cotizacion, pedido, metodo]);
 
+
+    console.log(validationResults[steps[currentStep]]=== true)
     return (
-        <Layout footerType={"simple"} anteriorAccion={handleAnterior} siguienteAccion={handleSiguiente}>
+        <Layout footerType={"simple"} anteriorAccion={handleAnterior} siguienteAccion={handleSiguiente} actionEnabled={validationResults[steps[currentStep]]=== true}>
             <div className="max-h-screen p-8">
                 <h1 className="text-1xl font-semibold text-black mb-8">Ingresa los datos de tu tarjeta</h1>
 
@@ -93,7 +123,7 @@ const Tarjeta = () => {
                         >
                             <div className="w-full flex-shrink-0 relative">
                                 <input
-                                    type="number"
+                                    type="text"
                                     name="number"
                                     className={`form-control p-2 border rounded w-full focus:outline-none`}
                                     value={values.number}
