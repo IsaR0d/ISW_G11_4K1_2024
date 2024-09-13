@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import "react-credit-cards-2/dist/es/styles-compiled.css";
 import Cards from "react-credit-cards-2";
 import { validateNumber, validateName, validateExpiry, validateCvc, validatePin, getMarca } from '../services/validarTarjeta';
-import { procesarPago } from '../services/procesarPago';
+import { procesarPago } from '../services/procesarPago.js';
 
 
 const Tarjeta = () => {
@@ -88,7 +88,7 @@ const Tarjeta = () => {
 
     useEffect(() => {
         if (confirmar) {
-            navigate("/confirmacion", { state: { cotizacion, pedido, metodo } });
+            navigate("/confirmacion", { state: { cotizacion, pedido, metodo, datosTarjeta: values } });
             setConfirmar(false);
         }
         else if (volver) {

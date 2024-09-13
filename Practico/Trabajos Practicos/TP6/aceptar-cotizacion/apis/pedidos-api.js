@@ -13,12 +13,19 @@ app.use(express.json());
 
 // Path to the JSON file
 const dataFilePath = path.join(__dirname, 'pedidos.json');
+const cardFilePath = path.join(__dirname, 'tarjetas.json');
 
 // Function to read data from JSON file
 const readData = () => {
     const data = fs.readFileSync(dataFilePath);
     return JSON.parse(data);
 };
+
+const readCards = () => {
+    const data = fs.readFileSync(cardFilePath);
+    return JSON.parse(data);
+};
+
 
 // Function to write data to JSON file
 const writeData = (data) => {
@@ -79,6 +86,41 @@ app.put('/api/confirmar', (req, res) => {
         res.json(pedido);
     } else {
         res.status(404).json({ message: 'Pedido no encontrado' });
+    }
+});
+
+// Endpoint GET /api/pedido=:idPedido&cotizacion=:idCotizacion
+app.patch('/api/tarjetas', (req, res) => {
+    const { number, name, expiry, cvc, pin, monto } = req.body;
+    console.log({ number, name, expiry, cvc, pin, monto })
+    const cards = readCards();
+    const card = cards.find(c => c.numero.toString() == number.toString());
+    console.log(card);
+
+    if (card) {
+        // Si la tarjeta existe, validamos sus datos.
+        if(card.numero != number.toString()
+             || card.nombre.toUpperCase() != name.toString().toUpperCase()
+             || card.expiracion != expiry.toString()
+             || card.pin != pin.toString() 
+             || card.cvc != cvc.toString())
+        {
+            res.status(400).json({message: "Datos de tarjeta incorrectos"})
+        }
+        else if (!card.activo) {
+            res.status(400).json({message: "Tarjeta deshabilitada"})
+        }
+        else if (card.monto < monto) {
+            res.status(400).json({message: "Saldo insuficiente"})
+        }
+        else {
+            card.monto -= monto;
+            res.status(200).json({message: "Transaccion completada correctamente"})
+        }
+
+    } else {
+        // Si el pedido no se encuentra, devolver un error
+        res.status(404).json({ message: "Tarjeta no encontrada: " + number });
     }
 });
 

@@ -1,33 +1,75 @@
 // Algoritmo de Luhn
 export const validarNumero =(number) => {
 
-    const cleanNumber = number.replace(/\D/g, '');
-
-    if (cleanNumber.length < 13 || cleanNumber.length > 19) {
-        return false;
-    }
+    const sanitizedCardNumber = number.replace(/\D/g, '');
 
     let sum = 0;
     let shouldDouble = false;
-
-    for (let i = cleanNumber.length - 1; i >= 0; i--) {
-        let digit = parseInt(cleanNumber[i], 10);
-
-        if (shouldDouble) {
-            digit *= 2;
-
-            if (digit > 9) {
-                digit -= 9;
-            }
+  
+    // Process each digit from right to left
+    for (let i = sanitizedCardNumber.length - 1; i >= 0; i--) {
+      let digit = parseInt(sanitizedCardNumber.charAt(i), 10);
+  
+      if (shouldDouble) {
+        digit *= 2;
+        if (digit > 9) {
+          digit -= 9;
         }
-
-        sum += digit;
-        shouldDouble = !shouldDouble;
+      }
+  
+      sum += digit;
+      shouldDouble = !shouldDouble;
     }
-
+  
     return sum % 10 === 0;
 }
 
+export const validateNumber = (number) =>
+{
+    const cardNumberRegex = /^\d+$/;
+    if (!cardNumberRegex.test(number))
+    {
+        return "Formato de tarjeta invalido."
+    }
+    if (!validarNumero(number)){
+        return "Numero de tarjeta invalidado."
+    }
+    return true;
+}
+
+export const validateName = (name) => 
+{
+    const nameRegex = /^[A-Za-zÀ-ÖØ-ÿ'’-]+(?: [A-Za-zÀ-ÖØ-ÿ'’-]+)*$/i;
+    if (!nameRegex.test(name))
+    {
+        return "Ingrese un nombre valido."
+    }
+    return true;
+};
+export const validateExpiry = (name) => {
+    const nameRegex = /^(0[1-9]|1[0-2])\/([0-9]{2})$/;
+    if (!nameRegex.test(name))
+    {
+        return "Ingrese una fecha de expiracion valida (MM/YY)"
+    }
+    return true;
+};
+export const validateCvc = (number) => {
+    const fourDigitNumberRegex = /^\d{3,4}$/;
+    if (!fourDigitNumberRegex.test(number))
+        {
+            return "Ingrese un CVC de 3 digitos"
+        }
+    return true;
+};
+export const validatePin= (number) => {
+    const fourDigitNumberRegex = /^\d{4,6}$/;
+    if (!fourDigitNumberRegex.test(number))
+        {
+            return "Ingrese un PIN de hasta 6 digitos"
+        }
+    return true;
+};
 function getMarca(number) {
     // Eliminar espacios y guiones
     number = number.replace(/\s+/g, '').replace(/-/g, '');
