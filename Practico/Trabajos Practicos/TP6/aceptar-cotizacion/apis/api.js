@@ -5,17 +5,12 @@ const path = require('path');
 const app = express();
 const port = 4000;
 
-// Enable CORS
 app.use(cors());
-
-// Middleware to parse JSON bodies
 app.use(express.json());
 
-// Path to the JSON file
 const dataFilePath = path.join(__dirname, 'pedidos.json');
 const cardFilePath = path.join(__dirname, 'tarjetas.json');
 
-// Function to read data from JSON file
 const readData = () => {
     const data = fs.readFileSync(dataFilePath);
     return JSON.parse(data);
@@ -26,8 +21,10 @@ const readCards = () => {
     return JSON.parse(data);
 };
 
+function writeCards(cards) {
+    fs.writeFileSync(cardFilePath, JSON.stringify(cards, null, 2), 'utf-8');
+}
 
-// Function to write data to JSON file
 const writeData = (data) => {
     fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2));
 };
@@ -39,23 +36,17 @@ app.get('/api/pedido=:idPedido&cotizacion=:idCotizacion', (req, res) => {
     const pedido = data.find(p => p.id == idPedido);
 
     if (pedido) {
-        // Si el pedido existe, buscamos la cotización
         const cotizacion = pedido.cotizaciones.find(c => c.id == idCotizacion);
 
         if (cotizacion) {
-            // Devolver tanto el pedido como la cotización
             res.json({
                 pedido: pedido,
                 cotizacion: cotizacion
             });
         } else {
-            // Si la cotización no se encuentra, devolver solo el pedido
-            res.json({
-                pedido: pedido
-            });
+            res.status(404).json({ message: "Cotización no encontrada" });
         }
     } else {
-        // Si el pedido no se encuentra, devolver un error
         res.status(404).json({ message: 'Pedido no encontrado' });
     }
 });
@@ -70,14 +61,12 @@ app.put('/api/confirmar', (req, res) => {
     if (pedidoIndex > -1) {
         const pedido = data[pedidoIndex];
         
-        // Actualizar campos si no son nulos
         if (metodo_pago !== undefined) pedido.meotodo_pago = metodo_pago;
         if (entrega_fecha !== undefined) pedido.entrega_fecha = entrega_fecha;
         if (retiro_fecha !== undefined) pedido.retiro_fecha = retiro_fecha;
         if (transportista !== undefined) pedido.transportista = transportista;
         if (precio !== undefined) pedido.precio = precio;
 
-        // Actualizar estado del pedido
         pedido.estado = "Confirmada";
 
         data[pedidoIndex] = pedido;
@@ -89,40 +78,47 @@ app.put('/api/confirmar', (req, res) => {
     }
 });
 
-// Endpoint GET /api/pedido=:idPedido&cotizacion=:idCotizacion
+// Endpoint PUT /api/pedido=:idPedido&cotizacion=:idCotizacion
 app.patch('/api/tarjetas', (req, res) => {
     const { number, name, expiry, cvc, pin, monto } = req.body;
-    console.log({ number, name, expiry, cvc, pin, monto })
     const cards = readCards();
-    const card = cards.find(c => c.numero.toString() == number.toString());
-    console.log(card);
+    const cardIndex = cards.findIndex(c => c.numero.toString() === number.toString());
 
-    if (card) {
-        // Si la tarjeta existe, validamos sus datos.
-        if(card.numero != number.toString()
-             || card.nombre.toUpperCase() != name.toString().toUpperCase()
-             || card.expiracion != expiry.toString()
-             || card.pin != pin.toString() 
-             || card.cvc != cvc.toString())
-        {
-            res.status(400).json({message: "Datos de tarjeta incorrectos"})
-        }
-        else if (!card.activo) {
-            res.status(400).json({message: "Tarjeta deshabilitada"})
-        }
-        else if (card.monto < monto) {
-            res.status(400).json({message: "Saldo insuficiente"})
-        }
-        else {
-            card.monto -= monto;
-            res.status(200).json({message: "Transaccion completada correctamente"})
+    if (cardIndex !== -1) {
+        const card = cards[cardIndex];
+
+        if (card.numero !== number.toString()
+            || card.nombre.toUpperCase() !== name.toString().toUpperCase()
+            || card.expiracion !== expiry.toString()
+            || card.pin !== pin.toString()
+            || card.cvc !== cvc.toString()) {
+            return res.status(400).json({ message: "Los datos de la tarjeta son incorrectos." });
         }
 
+        if (!card.activo) {
+            return res.status(400).json({ message: "La tarjeta se encuentra deshabilitada." });
+        }
+
+        if (card.monto < monto) {
+            return res.status(400).json({
+                message: "La tarjeta se encuentra con saldo insuficiente.",
+            });
+        }
+
+        card.monto -= monto;
+        cards[cardIndex] = card;
+
+        writeCards(cards);
+
+        return res.status(200).json({
+            message: "Transacción completada correctamente",
+            numeroPago: Math.floor(100000000 + Math.random() * 900000000) // Número de pago aleatorio
+        });
     } else {
-        // Si el pedido no se encuentra, devolver un error
-        res.status(404).json({ message: "Tarjeta no encontrada: " + number });
+        return res.status(404).json({ message: "Tarjeta no encontrada: " + number });
     }
 });
+
 
 
 // Start server

@@ -1,101 +1,65 @@
 [
-    {
-      "nombre": "Tarjeta Oro",
-      "numero": "4539148803436467",
-      "monto": 950,
-      "activo": false,
-      "cvc": "123",
-      "pin": "1234",
-      "expiracion": "12/26"
-    },
-    {
-      "nombre": "Tarjeta Plata",
-      "numero": "4716123456789123",
-      "monto": 700,
-      "activo": true,
-      "cvc": "234",
-      "pin": "5678",
-      "expiracion": "11/25"
-    },
-    {
-      "nombre": "Tarjeta Bronce",
-      "numero": "4916123456789123",
-      "monto": 300,
-      "activo": true,
-      "cvc": "345",
-      "pin": "9101",
-      "expiracion": "10/24"
-    },
-    {
-      "nombre": "Tarjeta Básica",
-      "numero": "4485651234567890",
-      "monto": 450,
-      "activo": true,
-      "cvc": "456",
-      "pin": "1122",
-      "expiracion": "09/27"
-    },
-    {
-      "nombre": "Tarjeta Estándar",
-      "numero": "4532576234567890",
-      "monto": 800,
-      "activo": false,
-      "cvc": "567",
-      "pin": "3344",
-      "expiracion": "08/26"
-    },
-    {
-      "nombre": "Tarjeta Platino",
-      "numero": "6011111111111117",
-      "monto": 12000,
-      "activo": true,
-      "cvc": "678",
-      "pin": "5566",
-      "expiracion": "07/28"
-    },
-    {
-      "nombre": "Tarjeta Premium",
-      "numero": "6011000000000004",
-      "monto": 25000,
-      "activo": true,
-      "cvc": "789",
-      "pin": "7788",
-      "expiracion": "06/29"
-    },
-    {
-      "nombre": "Tarjeta VIP",
-      "numero": "6011234567890004",
-      "monto": 15000,
-      "activo": true,
-      "cvc": "890",
-      "pin": "9900",
-      "expiracion": "05/30"
-    },
-    {
-      "nombre": "Tarjeta Élite",
-      "numero": "6011345678900004",
-      "monto": 18000,
-      "activo": true,
-      "cvc": "901",
-      "pin": "2233",
-      "expiracion": "04/31"
-    },
-    {
-      "nombre": "Tarjeta Exclusiva",
-      "numero": "6011456789010004",
-      "monto": 22000,
-      "activo": false,
-      "cvc": "012",
-      "pin": "4455",
-      "expiracion": "03/32"
-    },
-    {
-      "nombre": "Tarjeta Diamante",
-      "numero": "4539763289618529",
-      "monto": 6500,
-      "activo": true,
-      "cvc": "321",
-      "pin": "6789",
-      "expiracion": "01/25"
-    }
-  ]
+  {
+    "nombre": "Máximo Sánchez",
+    "numero": "4539579123457892",
+    "monto": 5000,
+    "activo": true,
+    "cvc": "123",
+    "pin": "1234",
+    "expiracion": "12/26"
+  },
+  {
+    "nombre": "Ismael Carrizo",
+    "numero": "5300511234567891",
+    "monto": 500,
+    "activo": false,
+    "cvc": "234",
+    "pin": "5678",
+    "expiracion": "11/25"
+  },
+  {
+    "nombre": "Martín Mengo",
+    "numero": "4532761234569875",
+    "monto": 500,
+    "activo": true,
+    "cvc": "345",
+    "pin": "9101",
+    "expiracion": "10/24"
+  },
+  {
+    "nombre": "Agostina Avalle",
+    "numero": "5424198765432116",
+    "monto": 4500,
+    "activo": true,
+    "cvc": "456",
+    "pin": "1122",
+    "expiracion": "09/27"
+  },
+  {
+    "nombre": "Isauro Rodríguez",
+    "numero": "4539627891234561",
+    "monto": 1000,
+    "activo": false,
+    "cvc": "567",
+    "pin": "3344",
+    "expiracion": "08/26"
+  },
+  {
+    "nombre": "Juan López",
+    "numero": "5300923456781235",
+    "monto": 5000,
+    "activo": true,
+    "cvc": "678",
+    "pin": "5566",
+    "expiracion": "07/28"
+  },
+  {
+    "nombre": "Brian Pelliza",
+    "numero": "4539125678906543",
+    "monto": 6000,
+    "activo": true,
+    "cvc": "789",
+    "pin": "7788",
+    "expiracion": "06/29"
+  }
+]

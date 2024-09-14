@@ -15,7 +15,7 @@ const Confirmacion = () => {
     const isTarjeta = metodo.toLowerCase().includes('tarjeta');
 
 
-    const confirmarPedido = async () => {
+    const confirmarPedido = async (numeroPago) => {
         const response = await fetch("http://localhost:4000/api/confirmar", {
             method: "PUT",
             headers: {
@@ -32,7 +32,15 @@ const Confirmacion = () => {
         });
 
         if (!response.ok) {
-            throw new Error('Error al confirmar el pedido');
+            setModalContent({
+                nombreImagen: "Fail",
+                titulo: 'Error',
+                descripcion: `Ha ocurrido un error inesperado. Por favor, intente nuevamente.`,
+                textoBotonPrincipal: "Reintentar",
+                accionBotonPrincipal: () => window.history.back(),
+            });
+            
+            return;
         }
 
         const data = await response.json();
@@ -40,13 +48,17 @@ const Confirmacion = () => {
         setModalContent({
             nombreImagen: "Success",
             titulo: isTarjeta ? '¡Pago exitoso!' : 'Cotización confirmada',
-            descripcion: `El pedido #ID${data.id} ha sido confirmado correctamente.`,
+            descripcion: `El pedido #ID${data.id} ha sido confirmado correctamente.` +
+            `${numeroPago ? `Número de pago: ${numeroPago}` : ''}`,
             textoBotonPrincipal: "Ver mi pedido",
             accionBotonPrincipal: () => console.log(data),
             textoBotonSecundario: 'Contactar con el transportista',
             accionBotonSecundario: () => console.log([data.transportista.nro_telefono, data.transportista.mail]),
         });
+        
         await enviarCorreoConfirmacion(`Su cotización para el pedido #ID${data.id} fue aceptada. Método de pago seleccionado: ${metodo}.`);
+        
+        alert(`(Simulación de notificación push) Su cotización para el pedido #ID${data.id} fue aceptada. Método de pago seleccionado: ${metodo}.`);
     }
 
     const handleConfirmar = async () => {
@@ -54,10 +66,8 @@ const Confirmacion = () => {
         try {
             
             if (isTarjeta) {
-                console.log(datosTarjeta, cotizacion.precio);
-                let {ok, message} = await procesarPago(datosTarjeta.number, datosTarjeta.name, datosTarjeta.expiry, datosTarjeta.cvc, datosTarjeta.pin, cotizacion.precio);
-                console.log("EStado:", ok);
-                console.log("Mensaje: ", message);
+                let {ok, message, numeroPago} = await procesarPago(datosTarjeta.number, datosTarjeta.name, datosTarjeta.expiry, datosTarjeta.cvc, datosTarjeta.pin, cotizacion.precio);
+
                 if(!ok)
                 {
                     setModalContent({
@@ -66,26 +76,25 @@ const Confirmacion = () => {
                         descripcion: message,
                         textoBotonPrincipal: "Intentar nuevamente",
                         accionBotonPrincipal: () => window.history.back(),
+                        textoBotonSecundario: "Elegir otro medio de pago",
+                        accionBotonSecundario: () => navigate(-2)
                     });
                 }
                 else {
-                    confirmarPedido();
+                    confirmarPedido(numeroPago);
                 }
             }
             else {
                 confirmarPedido();
             }
     
-
         } catch (error) {
             setModalContent({
                 nombreImagen: 'Fail',
-                titulo: 'Error de Confirmación',
+                titulo: 'Error',
                 descripcion: 'No se pudo confirmar el pedido. Inténtalo nuevamente.',
                 textoBotonPrincipal: 'Reintentar',
                 accionBotonPrincipal: handleConfirmar,
-                textoBotonSecundario: 'Cancelar',
-                accionBotonSecundario: () => setModalOpen(false),
             });
         } finally {
             setLoading(false);

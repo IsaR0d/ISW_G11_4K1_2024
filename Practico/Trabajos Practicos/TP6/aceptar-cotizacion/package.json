@@ -22,7 +22,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "concurrently \"react-scripts start\" \"node apis/pedidos-api.js\" \"node apis/mail-api.js\"",
+    "start": "concurrently \"react-scripts start\" \"node apis/api.js\" \"node apis/mail-api.js\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

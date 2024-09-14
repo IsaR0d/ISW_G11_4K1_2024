@@ -4,6 +4,7 @@ import DetallesCotizacion from './pages/DetallesCotizacion';
 import MetodoPago from './pages/MetodoPago';
 import Tarjeta from './pages/Tarjeta';
 import Confirmacion from './pages/Confirmacion';
+import Inicio from './pages/Inicio';
 import Error from './pages/Error';
 import PhoneFrame from './layout/PhoneFrame';
 import './App.css';
@@ -19,6 +20,7 @@ const App = () => {
             <Route path="/tarjeta" element={<Tarjeta />} />
             <Route path="/confirmacion" element={<Confirmacion />} />
             <Route path="/error" element={<Error />} />
+            <Route path="/*" element={<Inicio />} />
           </Routes>
         </PhoneFrame>
       </div>

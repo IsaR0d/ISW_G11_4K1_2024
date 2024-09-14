@@ -3,26 +3,13 @@ import Layout from '../layout/Layout';
 import { useLocation, useNavigate } from 'react-router-dom';
 import "react-credit-cards-2/dist/es/styles-compiled.css";
 import Cards from "react-credit-cards-2";
-import { validateNumber, validateName, validateExpiry, validateCvc, validatePin, getMarca } from '../services/validarTarjeta';
-import { procesarPago } from '../services/procesarPago.js';
-
+import { validateNumber, validateName, validateExpiry, validateCvc, validatePin } from '../services/validarTarjeta';
 
 const Tarjeta = () => {
     const { state } = useLocation();
     const { cotizacion, pedido, metodo } = state || {};
-    const [ confirmar, setConfirmar ] = useState(false);
-    const [ validationResults, setValidations ] = useState({
-        number: null,
-        name: null,
-        expiry: null,
-        cvc: null,
-        focus: null,
-        pin: null
-    }
-    );
-    const [ volver, setVolver ] = useState(false);
-    const navigate = useNavigate();
-
+    const [confirmar, setConfirmar] = useState(false);
+    const [volvemos, setVolvemos] = useState(false);
     const [values, setValues] = useState({
         number: "",
         name: "",
@@ -31,48 +18,65 @@ const Tarjeta = () => {
         focus: "",
         pin: "",
     });
-
+    const [validationResults, setValidationResults] = useState({
+        number: null,
+        name: null,
+        expiry: null,
+        cvc: null,
+        pin: null,
+    });
+    const [shouldValidate, setShouldValidate] = useState(false);
     const [currentStep, setCurrentStep] = useState(0);
     const steps = ["number", "name", "expiry", "cvc", "pin"];
     const validators = [validateNumber, validateName, validateExpiry, validateCvc, validatePin];
     const maxAllowedLength = [16, 50, 5, 4, 6];
     const onlyNumbers = [true, false, false, true, true];
-    
-    
+    const navigate = useNavigate();
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
+const handleInputChange = (e) => {
+    const { name, value } = e.target;
 
-        console.log(currentStep)
-        if(value.length <= maxAllowedLength[currentStep])
-            {
-                if(onlyNumbers[currentStep] == !isNaN(value)){
-                    setValues((prev) => ({ ...prev, [name]: value }))
-                    let validationResult = validators[currentStep](value);
-                    setValidations((prev) => ({...prev, [name]: validationResult}))
-                }
-                else if (!onlyNumbers[currentStep]) {
-                    setValues((prev) => ({ ...prev, [name]: value }))
-                    let validationResult = validators[currentStep](value);
-                    setValidations((prev) => ({...prev, [name]: validationResult}))
-                }
-            };
-    };
+    if (value.length <= maxAllowedLength[currentStep]) {
+        if (onlyNumbers[currentStep] === !isNaN(value) || !onlyNumbers[currentStep]) {
+            setValues((prev) => {
+                const newValues = { ...prev, [name]: value };
+                validarStep(newValues);
+
+                return newValues;
+            });
+        }
+    }
+};
 
     const handleInputFocus = (e) => {
         setValues((prev) => ({ ...prev, focus: e.target.name }));
     };
-
+    const validarStep = (updatedValues) => {
+        if (!shouldValidate) return;
+    
+        const currentValidator = validators[currentStep];
+        const field = steps[currentStep];
+        const validationResult = currentValidator(updatedValues[field]);
+        setValidationResults((prev) => ({ ...prev, [field]: validationResult }));
+    
+        return validationResult;
+    }
+    
 
     const handleSiguiente = () => {
-        setCurrentStep((prev) => {
-            if (prev < steps.length - 1) {
-                return prev + 1;
-            } else {
-                setConfirmar(true);
-                return prev;
-            }
-        });
+        setShouldValidate(true);
+
+        if (validarStep(values) === true) {
+            setCurrentStep((prev) => {
+                if (prev < steps.length - 1) {
+                    setShouldValidate(false);
+                    return prev + 1;
+                } else {
+                    setConfirmar(true);
+                    return prev;
+                }
+            });
+        }
     };
 
     const handleAnterior = () => {
@@ -80,7 +84,7 @@ const Tarjeta = () => {
             if (prev > 0) {
                 return prev - 1;
             } else {
-                setVolver(true);
+                setVolvemos(true);
                 return 0;
             }
         });
@@ -91,19 +95,20 @@ const Tarjeta = () => {
             navigate("/confirmacion", { state: { cotizacion, pedido, metodo, datosTarjeta: values } });
             setConfirmar(false);
         }
-        else if (volver) {
+        if (volvemos) {
             navigate(-1);
-            setVolver(false);
+            setVolvemos(false);
         }
-    }, [confirmar, volver, navigate, cotizacion, pedido, metodo]);
+    }, [confirmar, volvemos, navigate, cotizacion, pedido, metodo]);
 
+    const getErrorMessageClassName = (name) => {
+        return validationResults[name] !== true && shouldValidate ? 'flex items-center text-red-500 text-sm mt-1' : 'hidden';
+    };
 
-    console.log(validationResults[steps[currentStep]]=== true)
     return (
-        <Layout footerType={"simple"} anteriorAccion={handleAnterior} siguienteAccion={handleSiguiente} actionEnabled={validationResults[steps[currentStep]]=== true}>
+        <Layout footerType={"simple"} anteriorAccion={handleAnterior} siguienteAccion={handleSiguiente}>
             <div className="max-h-screen p-8">
                 <h1 className="text-1xl font-semibold text-black mb-8">Ingresa los datos de tu tarjeta</h1>
-
                 <div className="relative flex flex-col items-center">
                     <div className="mb-6">
                         <Cards
@@ -114,8 +119,6 @@ const Tarjeta = () => {
                             focused={values.focus}
                         />
                     </div>
-
-                    {/* Contenedor para los inputs */}
                     <div className="relative w-full overflow-hidden mt-4">
                         <div
                             className="flex transition-transform duration-500 ease-in-out"
@@ -125,7 +128,7 @@ const Tarjeta = () => {
                                 <input
                                     type="text"
                                     name="number"
-                                    className={`form-control p-2 border rounded w-full focus:outline-none`}
+                                    className="form-control p-2 border rounded w-full focus:outline-none"
                                     value={values.number}
                                     placeholder="Número de tarjeta"
                                     onChange={handleInputChange}
@@ -133,6 +136,10 @@ const Tarjeta = () => {
                                     onBlur={() => setValues(prev => ({ ...prev, focus: "" }))}
                                     required
                                 />
+                                <div className={getErrorMessageClassName('number')}>
+                                    <i className="error-icon fas fa-exclamation-circle"></i>
+                                    {validationResults.number}
+                                </div>
                             </div>
 
                             <div className="w-full flex-shrink-0">
@@ -147,6 +154,10 @@ const Tarjeta = () => {
                                     onBlur={() => setValues(prev => ({ ...prev, focus: "" }))}
                                     required
                                 />
+                                <div className={getErrorMessageClassName('name')}>
+                                    <i className="error-icon fas fa-exclamation-circle"></i>
+                                    {validationResults.name}
+                                </div>
                             </div>
 
                             <div className="w-full flex-shrink-0">
@@ -154,13 +165,17 @@ const Tarjeta = () => {
                                     type="text"
                                     name="expiry"
                                     className="form-control p-2 border rounded w-full"
-                                    placeholder="Fecha de vencimiento (MM/AA)"
+                                    placeholder="Fecha de vencimiento (MM/YY)"
                                     value={values.expiry}
                                     onChange={handleInputChange}
                                     onFocus={handleInputFocus}
                                     onBlur={() => setValues(prev => ({ ...prev, focus: "" }))}
                                     required
                                 />
+                                <div className={getErrorMessageClassName('expiry')}>
+                                    <i className="error-icon fas fa-exclamation-circle"></i>
+                                    {validationResults.expiry}
+                                </div>
                             </div>
 
                             <div className="w-full flex-shrink-0">
@@ -175,6 +190,10 @@ const Tarjeta = () => {
                                     onBlur={() => setValues(prev => ({ ...prev, focus: "" }))}
                                     required
                                 />
+                                <div className={getErrorMessageClassName('cvc')}>
+                                    <i className="error-icon fas fa-exclamation-circle"></i>
+                                    {validationResults.cvc}
+                                </div>
                             </div>
 
                             <div className="w-full flex-shrink-0">
@@ -189,6 +208,10 @@ const Tarjeta = () => {
                                     onBlur={() => setValues(prev => ({ ...prev, focus: "" }))}
                                     required
                                 />
+                                <div className={getErrorMessageClassName('pin')}>
+                                    <i className="error-icon fas fa-exclamation-circle"></i>
+                                    {validationResults.pin}
+                                </div>
                             </div>
                         </div>
                     </div>
