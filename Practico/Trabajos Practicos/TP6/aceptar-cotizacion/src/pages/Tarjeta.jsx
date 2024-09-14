@@ -133,6 +133,10 @@ const Tarjeta = () => {
                                     onBlur={() => setValues(prev => ({ ...prev, focus: "" }))}
                                     required
                                 />
+                                {validationResults["number"] != null && validationResults["number"] !== true &&       
+                                <div className="mt-1 text-sm text-red-600 bg-red-100 p-2 rounded">
+                                    {validationResults["number"]}
+                                </div>}
                             </div>
 
                             <div className="w-full flex-shrink-0">
@@ -147,6 +151,10 @@ const Tarjeta = () => {
                                     onBlur={() => setValues(prev => ({ ...prev, focus: "" }))}
                                     required
                                 />
+                                {validationResults["name"] != null && validationResults["name"] !== true &&       
+                                <div className="mt-1 text-sm text-red-600 bg-red-100 p-2 rounded">
+                                    {validationResults["name"]}
+                                </div>}
                             </div>
 
                             <div className="w-full flex-shrink-0">
@@ -161,7 +169,13 @@ const Tarjeta = () => {
                                     onBlur={() => setValues(prev => ({ ...prev, focus: "" }))}
                                     required
                                 />
+                                {validationResults["expiry"] != null && validationResults["expiry"] !== true &&       
+                                <div className="mt-1 text-sm text-red-600 bg-red-100 p-2 rounded">
+                                    {validationResults["expiry"]}
+                                </div>}
                             </div>
+
+                            
 
                             <div className="w-full flex-shrink-0">
                                 <input
@@ -175,6 +189,11 @@ const Tarjeta = () => {
                                     onBlur={() => setValues(prev => ({ ...prev, focus: "" }))}
                                     required
                                 />
+
+                                {validationResults["cvc"] != null && validationResults["cvc"] !== true &&       
+                                <div className="mt-1 text-sm text-red-600 bg-red-100 p-2 rounded">
+                                    {validationResults["cvc"]}
+                                </div>}
                             </div>
 
                             <div className="w-full flex-shrink-0">
@@ -189,6 +208,10 @@ const Tarjeta = () => {
                                     onBlur={() => setValues(prev => ({ ...prev, focus: "" }))}
                                     required
                                 />
+                                {validationResults["pin"] != null && validationResults["pin"] !== true &&       
+                                <div className="mt-1 text-sm text-red-600 bg-red-100 p-2 rounded">
+                                    {validationResults["pin"]}
+                                </div>}
                             </div>
                         </div>
                     </div>

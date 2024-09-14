@@ -18,8 +18,6 @@ export async function procesarPago(number, name, expiry, cvc, pin, monto) {
 
         const result = await response.json();
         const success = response.status == 200;
-        alert(success)
-
         return {
             ok: success,
             message: result.message

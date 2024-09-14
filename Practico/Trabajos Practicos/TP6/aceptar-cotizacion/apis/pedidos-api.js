@@ -26,11 +26,47 @@ const readCards = () => {
     return JSON.parse(data);
 };
 
+const checkDate = (mmYY) =>
+{
+
+        // Get current date
+        const now = new Date();
+        const currentMonth = now.getMonth() + 1; // getMonth() returns 0-11
+        const currentYear = now.getFullYear();
+        
+        // Parse MM/YY
+        const [inputMonth, inputYear] = mmYY.split('/');
+        const month = parseInt(inputMonth, 10);
+        const year = parseInt(`20${inputYear}`, 10); // Assuming input is in the 2000s
+      
+        if (isNaN(month) || isNaN(year) || month < 1 || month > 12 || year < currentYear) {
+          return false; // Invalid date
+        }
+      
+        // Check if the input year is greater than the current year
+        if (year > currentYear) {
+          return true;
+        }
+      
+        // Check if the input year is the same as the current year but the month is greater
+        if (year === currentYear && month > currentMonth) {
+          return true;
+        }
+      
+        return false;
+      
+}
+
 
 // Function to write data to JSON file
 const writeData = (data) => {
     fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2));
 };
+
+const writeCards = (data) => {
+    fs.writeFileSync(cardFilePath, JSON.stringify(data, null, 2));
+};
+
 
 // Endpoint GET /api/pedido=:idPedido&cotizacion=:idCotizacion
 app.get('/api/pedido=:idPedido&cotizacion=:idCotizacion', (req, res) => {
@@ -94,11 +130,13 @@ app.patch('/api/tarjetas', (req, res) => {
     const { number, name, expiry, cvc, pin, monto } = req.body;
     console.log({ number, name, expiry, cvc, pin, monto })
     const cards = readCards();
-    const card = cards.find(c => c.numero.toString() == number.toString());
-    console.log(card);
+    console.log(cards)
+    const cardIdx =  cards.findIndex(c => c.numero.toString() == number.toString());;
+    
 
-    if (card) {
+    if (cardIdx != -1) {
         // Si la tarjeta existe, validamos sus datos.
+        let card = cards[cardIdx];
         if(card.numero != number.toString()
              || card.nombre.toUpperCase() != name.toString().toUpperCase()
              || card.expiracion != expiry.toString()
@@ -110,11 +148,16 @@ app.patch('/api/tarjetas', (req, res) => {
         else if (!card.activo) {
             res.status(400).json({message: "Tarjeta deshabilitada"})
         }
+        else if (!checkDate(card.expiracion)) {
+            res.status(400).json({message: "Tarjeta no vigente"})
+        }
         else if (card.monto < monto) {
             res.status(400).json({message: "Saldo insuficiente"})
         }
         else {
             card.monto -= monto;
+            cards[cardIdx] = card;
+            writeCards(cards);
             res.status(200).json({message: "Transaccion completada correctamente"})
         }
 
