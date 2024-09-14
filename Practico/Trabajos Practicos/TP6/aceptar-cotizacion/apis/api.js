@@ -29,6 +29,11 @@ const writeData = (data) => {
     fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2));
 };
 
+const writeCards = (data) => {
+    fs.writeFileSync(cardFilePath, JSON.stringify(data, null, 2));
+};
+
+
 // Endpoint GET /api/pedido=:idPedido&cotizacion=:idCotizacion
 app.get('/api/pedido=:idPedido&cotizacion=:idCotizacion', (req, res) => {
     const { idPedido, idCotizacion } = req.params;

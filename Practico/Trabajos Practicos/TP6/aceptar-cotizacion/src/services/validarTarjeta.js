@@ -25,18 +25,12 @@ export const validarNumero =(number) => {
 
 export const validateNumber = (number) =>
 {
-    const cardNumberRegex = /^\d+$/;
+    const cardNumberRegex = /^(4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|2(2[2-9][0-9]{2}|[3-6][0-9]{3}|7([01][0-9]{2}|20[0-9]))[0-9]{12})$/;
     if (!cardNumberRegex.test(number))
     {
-        return "Formato de tarjeta inválido."
-    }
-    else if (!validarNumero(number)){
-        return "Número de tarjeta inválido."
+        return "Ingrese una tarjeta VISA o Mastercard valida."
     }
 
-    else if (getMarca(number) !== "Mastercard" && getMarca(number) !== "Visa") {
-        return "Por favor, ingrese una tarjeta Visa o Mastercard."
-    }
     return true;
 }
 
