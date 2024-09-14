@@ -48,7 +48,6 @@ const DetallesCotizacion = () => {
 
     if (loading) return <p>Cargando...</p>;
     if (error) return <p>{error}</p>;
-    if (!cotizacion) return <p>No se encontró la cotización</p>;
 
     const handleConfirmar = () => {
         navigate('/metodo-pago', {

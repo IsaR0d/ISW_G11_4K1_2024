@@ -73,9 +73,7 @@ app.get('/api/pedido=:idPedido&cotizacion=:idCotizacion', (req, res) => {
                 cotizacion: cotizacion
             });
         } else {
-            res.json({
-                pedido: pedido
-            });
+            res.status(404).json({ message: 'Cotización no encontrada' });
         }
     } else {
         res.status(404).json({ message: 'Pedido no encontrado' });
