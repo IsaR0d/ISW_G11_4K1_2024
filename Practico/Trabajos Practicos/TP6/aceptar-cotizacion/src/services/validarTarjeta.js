@@ -1,5 +1,5 @@
 // Algoritmo de Luhn
-export const validarNumero =(number) => {
+export const validarNumero = (number) => {
 
     const sanitizedCardNumber = number.replace(/\D/g, '');
 
@@ -26,7 +26,7 @@ export const validarNumero =(number) => {
 export const validateNumber = (number) =>
 {
     const cardNumberRegex = /^(4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|2(2[2-9][0-9]{2}|[3-6][0-9]{3}|7([01][0-9]{2}|20[0-9]))[0-9]{12})$/;
-    if (!cardNumberRegex.test(number))
+    if (!cardNumberRegex.test(number) || !validarNumero(number))
     {
         return "Ingrese una tarjeta VISA o Mastercard valida."
     }
@@ -61,7 +61,7 @@ export const validateExpiry = (expiry) => {
     const expiryYear = parseInt(year, 10);
 
     if (expiryYear < currentYear || (expiryYear === currentYear && expiryMonth < currentMonth)) {
-        return "La fecha de expiración debe ser posterior a la actual";
+        return "La tarjeta debe estar vigente.";
     }
 
     return true;
@@ -83,16 +83,3 @@ export const validatePin= (number) => {
         }
     return true;
 };
-
-function getMarca(number) {
-    number = number.replace(/\s+/g, '').replace(/-/g, '');
-    const bin = number.substring(0, 6);
-
-    if (bin.startsWith('4')) {
-        return 'Visa';
-    } else if (bin.startsWith('51') || bin.startsWith('52') || bin.startsWith('53') || bin.startsWith('54') || bin.startsWith('55')) {
-        return 'Mastercard';
-    } else {
-        return 'Marca de tarjeta no reconocida';
-    }
-}

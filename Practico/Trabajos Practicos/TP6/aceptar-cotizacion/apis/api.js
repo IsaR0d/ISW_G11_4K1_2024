@@ -21,10 +21,34 @@ const readCards = () => {
     return JSON.parse(data);
 };
 
-function writeCards(cards) {
-    fs.writeFileSync(cardFilePath, JSON.stringify(cards, null, 2), 'utf-8');
+const checkDate = (mmYY) =>
+{
+    const now = new Date();
+    const currentMonth = now.getMonth() + 1;
+    const currentYear = now.getFullYear();
+    
+    const [inputMonth, inputYear] = mmYY.split('/');
+    const month = parseInt(inputMonth, 10);
+    const year = parseInt(`20${inputYear}`, 10);
+    
+    if (isNaN(month) || isNaN(year) || month < 1 || month > 12 || year < currentYear) {
+        return false;
+    }
+    
+    if (year > currentYear) {
+        return true;
+    }
+    
+    if (year === currentYear && month > currentMonth) {
+        return true;
+    }
+    
+    return false;
+    
 }
 
+
+// Function to write data to JSON file
 const writeData = (data) => {
     fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2));
 };
@@ -49,7 +73,9 @@ app.get('/api/pedido=:idPedido&cotizacion=:idCotizacion', (req, res) => {
                 cotizacion: cotizacion
             });
         } else {
-            res.status(404).json({ message: "Cotización no encontrada" });
+            res.json({
+                pedido: pedido
+            });
         }
     } else {
         res.status(404).json({ message: 'Pedido no encontrado' });
@@ -83,47 +109,46 @@ app.put('/api/confirmar', (req, res) => {
     }
 });
 
-// Endpoint PUT /api/pedido=:idPedido&cotizacion=:idCotizacion
+// Endpoint GET /api/pedido=:idPedido&cotizacion=:idCotizacion
 app.patch('/api/tarjetas', (req, res) => {
     const { number, name, expiry, cvc, pin, monto } = req.body;
     const cards = readCards();
-    const cardIndex = cards.findIndex(c => c.numero.toString() === number.toString());
+    const cardIdx =  cards.findIndex(c => c.numero.toString() == number.toString());;
+    
 
-    if (cardIndex !== -1) {
-        const card = cards[cardIndex];
-
-        if (card.numero !== number.toString()
-            || card.nombre.toUpperCase() !== name.toString().toUpperCase()
-            || card.expiracion !== expiry.toString()
-            || card.pin !== pin.toString()
-            || card.cvc !== cvc.toString()) {
-            return res.status(400).json({ message: "Los datos de la tarjeta son incorrectos." });
+    if (cardIdx != -1) {
+        let card = cards[cardIdx];
+        if(card.numero != number.toString()
+                || card.nombre.toUpperCase() != name.toString().toUpperCase()
+                || card.expiracion != expiry.toString()
+                || card.pin != pin.toString() 
+                || card.cvc != cvc.toString())
+        {
+            res.status(400).json({message: "Los datos de la tarjeta son incorrectos."})
+        }
+        else if (!card.activo) {
+            res.status(400).json({message: "La tarjeta se encuentra deshabilitada."})
+        }
+        else if (!checkDate(card.expiracion)) {
+            res.status(400).json({message: "La tarjeta no se encunetra vigente."})
+        }
+        else if (card.monto < monto) {
+            res.status(400).json({message: "La tarjeta se encuentra con saldo insuficiente."})
+        }
+        else {
+            card.monto -= monto;
+            cards[cardIdx] = card;
+            writeCards(cards);
+            res.status(200).json({
+                message: "Transaccion completada correctamente",
+                numeroPago: Math.floor(100000000 + Math.random() * 900000000)
+            })
         }
 
-        if (!card.activo) {
-            return res.status(400).json({ message: "La tarjeta se encuentra deshabilitada." });
-        }
-
-        if (card.monto < monto) {
-            return res.status(400).json({
-                message: "La tarjeta se encuentra con saldo insuficiente.",
-            });
-        }
-
-        card.monto -= monto;
-        cards[cardIndex] = card;
-
-        writeCards(cards);
-
-        return res.status(200).json({
-            message: "Transacción completada correctamente",
-            numeroPago: Math.floor(100000000 + Math.random() * 900000000) // Número de pago aleatorio
-        });
     } else {
-        return res.status(404).json({ message: "Tarjeta no encontrada: " + number });
+        res.status(404).json({ message: "Tarjeta no encontrada: " + number });
     }
 });
-
 
 
 // Start server

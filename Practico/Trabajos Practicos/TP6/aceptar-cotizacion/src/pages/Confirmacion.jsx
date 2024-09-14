@@ -66,10 +66,7 @@ const Confirmacion = () => {
         try {
             
             if (isTarjeta) {
-                console.log(datosTarjeta, cotizacion.precio);
-                let {ok, message} = await procesarPago(datosTarjeta.number, datosTarjeta.name, datosTarjeta.expiry, datosTarjeta.cvc, datosTarjeta.pin, cotizacion.precio);
-                console.log("EStado:", ok);
-                console.log("Mensaje: ", message);
+                let {ok, message, numeroPago} = await procesarPago(datosTarjeta.number, datosTarjeta.name, datosTarjeta.expiry, datosTarjeta.cvc, datosTarjeta.pin, cotizacion.precio);
                 if(!ok)
                 {
                     setModalContent({
