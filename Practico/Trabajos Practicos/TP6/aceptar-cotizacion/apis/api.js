@@ -107,7 +107,6 @@ app.put('/api/confirmar', (req, res) => {
     }
 });
 
-// Endpoint GET /api/pedido=:idPedido&cotizacion=:idCotizacion
 app.patch('/api/tarjetas', (req, res) => {
     const { number, name, expiry, cvc, pin, tipoDoc, nroDoc, monto } = req.body;
     const cards = readCards();

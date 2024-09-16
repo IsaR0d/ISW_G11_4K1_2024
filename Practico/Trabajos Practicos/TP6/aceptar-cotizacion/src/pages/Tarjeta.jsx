@@ -33,7 +33,7 @@ const Tarjeta = () => {
     const [currentStep, setCurrentStep] = useState(0);
     const steps = ["number", "name", "expiry", "cvc", "pin", "tipoDoc", "nroDoc"];
     const validators = [validateNumber, validateName, validateExpiry, validateCvc, validatePin, validateTipoDoc, validateNroDoc];
-    const maxAllowedLength = [16, 50, 5, 4, 6, 10, 9];
+    const maxAllowedLength = [16, 50, 5, 3, 4, 10, 9];
     const onlyNumbers = [true, false, false, true, true, false, false];
     const navigate = useNavigate();
 
@@ -69,8 +69,6 @@ const Tarjeta = () => {
         } else {
             validationResult = currentValidator(userInput);
         }
-
-        console.log(userInput);
 
         setValidationResults((prev) => ({ ...prev, [field]: validationResult }));
     

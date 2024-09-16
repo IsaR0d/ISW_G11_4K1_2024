@@ -64,7 +64,6 @@ const Confirmacion = () => {
     const handleConfirmar = async () => {
         setLoading(true);        
         try {
-            
             if (isTarjeta) {
                 let {ok, message, numeroPago} = await procesarPago(
                     datosTarjeta.number,
@@ -75,6 +74,7 @@ const Confirmacion = () => {
                     datosTarjeta.tipoDoc,
                     datosTarjeta.nroDoc,
                     cotizacion.precio);
+
                 if(!ok)
                 {
                     setModalContent({

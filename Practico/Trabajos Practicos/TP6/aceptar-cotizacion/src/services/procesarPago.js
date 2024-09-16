@@ -1,4 +1,4 @@
-export async function procesarPago(number, name, expiry, cvc, pin, monto) {
+export async function procesarPago(number, name, expiry, cvc, pin, tipoDoc, nroDoc, monto) {
     try {
         const response = await fetch('http://localhost:4000/api/tarjetas', {
             method: 'PATCH',
@@ -11,6 +11,8 @@ export async function procesarPago(number, name, expiry, cvc, pin, monto) {
                 expiry,
                 cvc,
                 pin,
+                tipoDoc,
+                nroDoc,
                 monto
             })
         });
