@@ -143,8 +143,8 @@
       {
         "id": 2,
         "transportista": {
-          "nombre": "Ana",
-          "apellido": "Rodriguez",
+          "nombre": "Esteban",
+          "apellido": "Liendo",
           "rating": 4.5,
           "cantidad_resenas": 95,
           "nro_telefono": "+54 9 351 654 3210",

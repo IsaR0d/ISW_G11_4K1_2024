@@ -3,7 +3,7 @@ import Layout from '../layout/Layout';
 import { useLocation, useNavigate } from 'react-router-dom';
 import "react-credit-cards-2/dist/es/styles-compiled.css";
 import Cards from "react-credit-cards-2";
-import { validateNumber, validateName, validateExpiry, validateCvc, validatePin } from '../services/validarTarjeta';
+import { validateNumber, validateName, validateExpiry, validateCvc, validatePin, validateTipoDoc, validateNroDoc } from '../services/validarTarjeta';
 
 const Tarjeta = () => {
     const { state } = useLocation();
@@ -17,6 +17,8 @@ const Tarjeta = () => {
         cvc: "",
         focus: "",
         pin: "",
+        tipoDoc: "",
+        nroDoc: ""
     });
     const [validationResults, setValidationResults] = useState({
         number: null,
@@ -24,39 +26,52 @@ const Tarjeta = () => {
         expiry: null,
         cvc: null,
         pin: null,
+        tipoDoc: null,
+        nroDoc: null
     });
     const [shouldValidate, setShouldValidate] = useState(false);
     const [currentStep, setCurrentStep] = useState(0);
-    const steps = ["number", "name", "expiry", "cvc", "pin"];
-    const validators = [validateNumber, validateName, validateExpiry, validateCvc, validatePin];
-    const maxAllowedLength = [16, 50, 5, 4, 6];
-    const onlyNumbers = [true, false, false, true, true];
+    const steps = ["number", "name", "expiry", "cvc", "pin", "tipoDoc", "nroDoc"];
+    const validators = [validateNumber, validateName, validateExpiry, validateCvc, validatePin, validateTipoDoc, validateNroDoc];
+    const maxAllowedLength = [16, 50, 5, 4, 6, 10, 9];
+    const onlyNumbers = [true, false, false, true, true, false, false];
     const navigate = useNavigate();
 
-const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
 
-    if (value.length <= maxAllowedLength[currentStep]) {
-        if (onlyNumbers[currentStep] === !isNaN(value) || !onlyNumbers[currentStep]) {
-            setValues((prev) => {
-                const newValues = { ...prev, [name]: value };
-                validarStep(newValues);
+        if (value.length <= maxAllowedLength[currentStep]) {
+            if (onlyNumbers[currentStep] === !isNaN(value) || !onlyNumbers[currentStep]) {
+                setValues((prev) => {
+                    const newValues = { ...prev, [name]: value };
+                    validarStep(newValues);
 
-                return newValues;
-            });
+                    return newValues;
+                });
+            }
         }
-    }
-};
+    };
 
     const handleInputFocus = (e) => {
         setValues((prev) => ({ ...prev, focus: e.target.name }));
     };
+
     const validarStep = (updatedValues) => {
         if (!shouldValidate) return;
-    
-        const currentValidator = validators[currentStep];
+
+        let validationResult;
         const field = steps[currentStep];
-        const validationResult = currentValidator(updatedValues[field]);
+        let currentValidator = validators[currentStep];
+        const userInput = updatedValues[field];
+
+        if (field === "nroDoc") {
+            validationResult = currentValidator(updatedValues["tipoDoc"], userInput);
+        } else {
+            validationResult = currentValidator(userInput);
+        }
+
+        console.log(userInput);
+
         setValidationResults((prev) => ({ ...prev, [field]: validationResult }));
     
         return validationResult;
@@ -88,6 +103,14 @@ const handleInputChange = (e) => {
                 return 0;
             }
         });
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === "Tab") {
+            e.preventDefault();
+        } else if (e.key === 'Enter') {
+            handleSiguiente();
+        }
     };
 
     useEffect(() => {
@@ -135,6 +158,7 @@ const handleInputChange = (e) => {
                                     onFocus={handleInputFocus}
                                     onBlur={() => setValues(prev => ({ ...prev, focus: "" }))}
                                     required
+                                    onKeyDown={handleKeyDown}
                                 />
                                 <div className={getErrorMessageClassName('number')}>
                                     <i className="error-icon fas fa-exclamation-circle"></i>
@@ -153,6 +177,7 @@ const handleInputChange = (e) => {
                                     onFocus={handleInputFocus}
                                     onBlur={() => setValues(prev => ({ ...prev, focus: "" }))}
                                     required
+                                    onKeyDown={handleKeyDown}
                                 />
                                 <div className={getErrorMessageClassName('name')}>
                                     <i className="error-icon fas fa-exclamation-circle"></i>
@@ -171,14 +196,13 @@ const handleInputChange = (e) => {
                                     onFocus={handleInputFocus}
                                     onBlur={() => setValues(prev => ({ ...prev, focus: "" }))}
                                     required
+                                    onKeyDown={handleKeyDown}
                                 />
                                 <div className={getErrorMessageClassName('expiry')}>
                                     <i className="error-icon fas fa-exclamation-circle"></i>
                                     {validationResults.expiry}
                                 </div>
                             </div>
-
-                            
 
                             <div className="w-full flex-shrink-0">
                                 <input
@@ -191,6 +215,7 @@ const handleInputChange = (e) => {
                                     onFocus={handleInputFocus}
                                     onBlur={() => setValues(prev => ({ ...prev, focus: "" }))}
                                     required
+                                    onKeyDown={handleKeyDown}
                                 />
                                 <div className={getErrorMessageClassName('cvc')}>
                                     <i className="error-icon fas fa-exclamation-circle"></i>
@@ -209,10 +234,52 @@ const handleInputChange = (e) => {
                                     onFocus={handleInputFocus}
                                     onBlur={() => setValues(prev => ({ ...prev, focus: "" }))}
                                     required
+                                    onKeyDown={handleKeyDown}
                                 />
                                 <div className={getErrorMessageClassName('pin')}>
                                     <i className="error-icon fas fa-exclamation-circle"></i>
                                     {validationResults.pin}
+                                </div>
+                            </div>
+                            <div className="w-full flex-shrink-0">
+                                <select
+                                    type="select"
+                                    name="tipoDoc"
+                                    className="form-control p-2 border rounded w-full"
+                                    placeholder="Tipo de documento"
+                                    value={values.tipoDoc}
+                                    onChange={handleInputChange}
+                                    onFocus={handleInputFocus}
+                                    onBlur={() => setValues(prev => ({ ...prev, focus: "" }))}
+                                    required
+                                    onKeyDown={handleKeyDown}
+                                >
+                                    <option value="">Tipo de documento</option>
+                                    <option value="DNI">DNI</option>
+                                    <option value="Pasaporte">Pasaporte</option>
+                                </select>
+
+                                <div className={getErrorMessageClassName('tipoDoc')}>
+                                    <i className="error-icon fas fa-exclamation-circle"></i>
+                                    {validationResults.tipoDoc}
+                                </div>
+                            </div>
+                            <div className="w-full flex-shrink-0">
+                                <input
+                                    type="text"
+                                    name="nroDoc"
+                                    className="form-control p-2 border rounded w-full"
+                                    placeholder="Número de documento"
+                                    value={values.nroDoc}
+                                    onChange={handleInputChange}
+                                    onFocus={handleInputFocus}
+                                    onBlur={() => setValues(prev => ({ ...prev, focus: "" }))}
+                                    required
+                                    onKeyDown={handleKeyDown}
+                                />
+                                <div className={getErrorMessageClassName('nroDoc')}>
+                                    <i className="error-icon fas fa-exclamation-circle"></i>
+                                    {validationResults.nroDoc}
                                 </div>
                             </div>
                         </div>

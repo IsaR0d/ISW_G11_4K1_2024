@@ -26,6 +26,7 @@ export const validarNumero = (number) => {
 export const validateNumber = (number) =>
 {
     const cardNumberRegex = /^(4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|2(2[2-9][0-9]{2}|[3-6][0-9]{3}|7([01][0-9]{2}|20[0-9]))[0-9]{12})$/;
+
     if (!cardNumberRegex.test(number) || !validarNumero(number))
     {
         return "Ingrese una tarjeta VISA o Mastercard valida."
@@ -36,12 +37,7 @@ export const validateNumber = (number) =>
 
 export const validateName = (name) => 
 {
-    const nameRegex = /^[A-Za-zÀ-ÖØ-ÿ'’-]+(?: [A-Za-zÀ-ÖØ-ÿ'’-]+)*$/i;
-    if (!nameRegex.test(name))
-    {
-        return "Ingrese un nombre válido."
-    }
-    return true;
+    return (/^[A-Za-zÀ-ÖØ-ÿ'’-]+(?: [A-Za-zÀ-ÖØ-ÿ'’-]+)*$/i.test(name)) ? true : "Ingrese un nombre válido.";
 };
 
 export const validateExpiry = (expiry) => {
@@ -68,18 +64,26 @@ export const validateExpiry = (expiry) => {
 };
 
 export const validateCvc = (number) => {
-    const fourDigitNumberRegex = /^\d{3,4}$/;
-    if (!fourDigitNumberRegex.test(number))
-        {
-            return "Ingrese un CVC de 3 o 4 dígitos."
-        }
-    return true;
+    return (/^\d{3}$/.test(number)) ? true : "Ingrese un CVC de 3 dígitos.";
 };
 export const validatePin= (number) => {
-    const fourDigitNumberRegex = /^\d{4,6}$/;
-    if (!fourDigitNumberRegex.test(number))
-        {
-            return "Ingrese un PIN de hasta 6 dígitos."
-        }
-    return true;
+    return (/^\d{4}$/.test(number)) ? true : "Ingrese un PIN de 4 dígitos.";
 };
+
+export const validateTipoDoc = (tipoDoc) => {
+    return tipoDoc === "DNI" || tipoDoc === "Pasaporte" ? true : "Tipo de documento inválido";
+}
+
+export const validateNroDoc = (tipoDoc, nroDoc) => {
+    return tipoDoc === "DNI" ? validateDNI(nroDoc) : validatePasaporte(nroDoc);
+}
+
+export const validateDNI = (nroDoc) => {
+    return nroDoc.length === 8 && /^[0-9]+$/.test(nroDoc) ? true : "DNI inválido";
+
+}
+
+export const validatePasaporte = (nroDoc) => {
+    return nroDoc.length >= 6 && nroDoc.length <= 9 && /^[A-Z0-9]+$/.test(nroDoc) ? true : "Pasaporte inválido";
+
+}

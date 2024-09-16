@@ -66,7 +66,15 @@ const Confirmacion = () => {
         try {
             
             if (isTarjeta) {
-                let {ok, message, numeroPago} = await procesarPago(datosTarjeta.number, datosTarjeta.name, datosTarjeta.expiry, datosTarjeta.cvc, datosTarjeta.pin, cotizacion.precio);
+                let {ok, message, numeroPago} = await procesarPago(
+                    datosTarjeta.number,
+                    datosTarjeta.name,
+                    datosTarjeta.expiry,
+                    datosTarjeta.cvc,
+                    datosTarjeta.pin,
+                    datosTarjeta.tipoDoc,
+                    datosTarjeta.nroDoc,
+                    cotizacion.precio);
                 if(!ok)
                 {
                     setModalContent({
@@ -93,7 +101,7 @@ const Confirmacion = () => {
                 titulo: 'Error',
                 descripcion: 'No se pudo confirmar el pedido. Inténtalo nuevamente.',
                 textoBotonPrincipal: 'Reintentar',
-                accionBotonPrincipal: handleConfirmar,
+                accionBotonPrincipal: () => window.history.back(),
             });
         } finally {
             setLoading(false);

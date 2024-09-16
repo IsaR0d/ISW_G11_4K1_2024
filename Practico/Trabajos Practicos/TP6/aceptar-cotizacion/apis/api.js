@@ -109,7 +109,7 @@ app.put('/api/confirmar', (req, res) => {
 
 // Endpoint GET /api/pedido=:idPedido&cotizacion=:idCotizacion
 app.patch('/api/tarjetas', (req, res) => {
-    const { number, name, expiry, cvc, pin, monto } = req.body;
+    const { number, name, expiry, cvc, pin, tipoDoc, nroDoc, monto } = req.body;
     const cards = readCards();
     const cardIdx =  cards.findIndex(c => c.numero.toString() == number.toString());;
     
@@ -120,7 +120,9 @@ app.patch('/api/tarjetas', (req, res) => {
                 || card.nombre.toUpperCase() != name.toString().toUpperCase()
                 || card.expiracion != expiry.toString()
                 || card.pin != pin.toString() 
-                || card.cvc != cvc.toString())
+                || card.cvc != cvc.toString()
+                || card.tipoDoc != tipoDoc.toString()
+                || card.nroDoc != nroDoc.toString())
         {
             res.status(400).json({message: "Los datos de la tarjeta son incorrectos."})
         }
@@ -138,13 +140,13 @@ app.patch('/api/tarjetas', (req, res) => {
             cards[cardIdx] = card;
             writeCards(cards);
             res.status(200).json({
-                message: "Transaccion completada correctamente",
+                message: "Transacción completada correctamente",
                 numeroPago: Math.floor(100000000 + Math.random() * 900000000)
             })
         }
 
     } else {
-        res.status(404).json({ message: "Tarjeta no encontrada: " + number });
+        res.status(404).json({ message: "Los datos de la tarjeta son incorrectos." });
     }
 });
 

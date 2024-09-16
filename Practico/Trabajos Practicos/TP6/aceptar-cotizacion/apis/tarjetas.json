@@ -6,7 +6,9 @@
     "activo": true,
     "cvc": "123",
     "pin": "1234",
-    "expiracion": "12/26"
+    "expiracion": "12/26",
+    "tipoDoc": "DNI",
+    "nroDoc": "28345678"
   },
   {
     "nombre": "Ismael Carrizo",
@@ -15,7 +17,9 @@
     "activo": false,
     "cvc": "234",
     "pin": "5678",
-    "expiracion": "11/25"
+    "expiracion": "11/25",
+    "tipoDoc": "DNI",
+    "nroDoc": "32456789"
   },
   {
     "nombre": "Martín Mengo",
@@ -24,7 +28,9 @@
     "activo": true,
     "cvc": "345",
     "pin": "9101",
-    "expiracion": "10/24"
+    "expiracion": "10/24",
+    "tipoDoc": "DNI",
+    "nroDoc": "23567890"
   },
   {
     "nombre": "Agostina Avalle",
@@ -33,7 +39,9 @@
     "activo": true,
     "cvc": "456",
     "pin": "1122",
-    "expiracion": "09/27"
+    "expiracion": "09/27",
+    "tipoDoc": "DNI",
+    "nroDoc": "40678901"
   },
   {
     "nombre": "Isauro Rodríguez",
@@ -42,7 +50,9 @@
     "activo": false,
     "cvc": "567",
     "pin": "3344",
-    "expiracion": "08/26"
+    "expiracion": "08/26",
+    "tipoDoc": "Pasaporte",
+    "nroDoc": "A1234567"
   },
   {
     "nombre": "Juan López",
@@ -51,7 +61,9 @@
     "activo": true,
     "cvc": "678",
     "pin": "5566",
-    "expiracion": "07/28"
+    "expiracion": "07/28",
+    "tipoDoc": "Pasaporte",
+    "nroDoc": "B9876543"
   },
   {
     "nombre": "Brian Pelliza",
@@ -60,6 +72,8 @@
     "activo": true,
     "cvc": "789",
     "pin": "7788",
-    "expiracion": "06/29"
+    "expiracion": "06/29",
+    "tipoDoc": "Pasaporte",
+    "nroDoc": "C4567890"
   }
 ]
