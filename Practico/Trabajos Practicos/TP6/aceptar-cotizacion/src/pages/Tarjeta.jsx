@@ -3,6 +3,7 @@ import Layout from '../layout/Layout';
 import { useLocation, useNavigate } from 'react-router-dom';
 import "react-credit-cards-2/dist/es/styles-compiled.css";
 import Cards from "react-credit-cards-2";
+import { IMaskInput } from 'react-imask';
 import { validateNumber, validateName, validateExpiry, validateCvc, validatePin, validateTipoDoc, validateNroDoc } from '../services/validarTarjeta';
 
 const Tarjeta = () => {
@@ -33,19 +34,17 @@ const Tarjeta = () => {
     const [currentStep, setCurrentStep] = useState(0);
     const steps = ["number", "name", "expiry", "cvc", "pin", "tipoDoc", "nroDoc"];
     const validators = [validateNumber, validateName, validateExpiry, validateCvc, validatePin, validateTipoDoc, validateNroDoc];
-    const maxAllowedLength = [16, 50, 5, 3, 4, 10, 9];
+    const maxAllowedLength = [19, 40, 7, 3, 4, 10, 9];
     const onlyNumbers = [true, false, false, true, true, false, false];
     const navigate = useNavigate();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-
         if (value.length <= maxAllowedLength[currentStep]) {
             if (onlyNumbers[currentStep] === !isNaN(value) || !onlyNumbers[currentStep]) {
                 setValues((prev) => {
-                    const newValues = { ...prev, [name]: value };
+                    const newValues = { ...prev, [name]: value.toUpperCase() };
                     validarStep(newValues);
-
                     return newValues;
                 });
             }
@@ -54,6 +53,14 @@ const Tarjeta = () => {
 
     const handleInputFocus = (e) => {
         setValues((prev) => ({ ...prev, focus: e.target.name }));
+    };
+
+    const handleMaskChange = (value, name) => {
+        setValues(prev => {
+            const newValues = { ...prev, [name]: value.toUpperCase() };
+            validarStep(newValues);
+            return newValues;
+        });
     };
 
     const validarStep = (updatedValues) => {
@@ -71,10 +78,9 @@ const Tarjeta = () => {
         }
 
         setValidationResults((prev) => ({ ...prev, [field]: validationResult }));
-    
+
         return validationResult;
-    }
-    
+    };
 
     const handleSiguiente = () => {
         setShouldValidate(true);
@@ -104,10 +110,8 @@ const Tarjeta = () => {
     };
 
     const handleKeyDown = (e) => {
-        if (e.key === "Tab") {
+        if (e.key === "Tab" && !validarStep(values) === true ) {
             e.preventDefault();
-        } else if (e.key === 'Enter') {
-            handleSiguiente();
         }
     };
 
@@ -146,18 +150,20 @@ const Tarjeta = () => {
                             style={{ transform: `translateX(-${currentStep * 100}%)` }}
                         >
                             <div className="w-full flex-shrink-0 relative">
-                                <input
-                                    type="text"
+                                <IMaskInput
+                                    mask="0000 0000 0000 0000"
                                     name="number"
-                                    className="form-control p-2 border rounded w-full focus:outline-none"
+                                    className="form-control p-2 border rounded w-full focus:outline-secondary"
                                     value={values.number}
                                     placeholder="Número de tarjeta"
-                                    onChange={handleInputChange}
+                                    onAccept={(value) => handleMaskChange(value, 'number')}
                                     onFocus={handleInputFocus}
                                     onBlur={() => setValues(prev => ({ ...prev, focus: "" }))}
                                     required
                                     onKeyDown={handleKeyDown}
+                                    autoComplete='off'
                                 />
+                                
                                 <div className={getErrorMessageClassName('number')}>
                                     <i className="error-icon fas fa-exclamation-circle"></i>
                                     {validationResults.number}
@@ -168,7 +174,7 @@ const Tarjeta = () => {
                                 <input
                                     type="text"
                                     name="name"
-                                    className="form-control p-2 border rounded w-full"
+                                    className="form-control p-2 border rounded w-full focus:outline-secondary"
                                     placeholder="Nombre"
                                     value={values.name}
                                     onChange={handleInputChange}
@@ -176,6 +182,7 @@ const Tarjeta = () => {
                                     onBlur={() => setValues(prev => ({ ...prev, focus: "" }))}
                                     required
                                     onKeyDown={handleKeyDown}
+                                    autoComplete='off'
                                 />
                                 <div className={getErrorMessageClassName('name')}>
                                     <i className="error-icon fas fa-exclamation-circle"></i>
@@ -184,17 +191,18 @@ const Tarjeta = () => {
                             </div>
 
                             <div className="w-full flex-shrink-0">
-                                <input
-                                    type="text"
+                                <IMaskInput
+                                    mask="00/00"
                                     name="expiry"
-                                    className="form-control p-2 border rounded w-full"
-                                    placeholder="Fecha de vencimiento (MM/YY)"
+                                    className="form-control p-2 border rounded w-full focus:outline-secondary"
                                     value={values.expiry}
-                                    onChange={handleInputChange}
+                                    placeholder="MM/AA"
+                                    onAccept={(value) => handleMaskChange(value, 'expiry')}
                                     onFocus={handleInputFocus}
                                     onBlur={() => setValues(prev => ({ ...prev, focus: "" }))}
                                     required
                                     onKeyDown={handleKeyDown}
+                                    autoComplete='off'
                                 />
                                 <div className={getErrorMessageClassName('expiry')}>
                                     <i className="error-icon fas fa-exclamation-circle"></i>
@@ -206,7 +214,7 @@ const Tarjeta = () => {
                                 <input
                                     type="text"
                                     name="cvc"
-                                    className="form-control p-2 border rounded w-full"
+                                    className="form-control p-2 border rounded w-full focus:outline-secondary"
                                     placeholder="CVC"
                                     value={values.cvc}
                                     onChange={handleInputChange}
@@ -214,6 +222,7 @@ const Tarjeta = () => {
                                     onBlur={() => setValues(prev => ({ ...prev, focus: "" }))}
                                     required
                                     onKeyDown={handleKeyDown}
+                                    autoComplete='off'
                                 />
                                 <div className={getErrorMessageClassName('cvc')}>
                                     <i className="error-icon fas fa-exclamation-circle"></i>
@@ -223,9 +232,9 @@ const Tarjeta = () => {
 
                             <div className="w-full flex-shrink-0">
                                 <input
-                                    type="number"
+                                    type="password"
                                     name="pin"
-                                    className="form-control p-2 border rounded w-full"
+                                    className="form-control p-2 border rounded w-full focus:outline-secondary"
                                     placeholder="PIN"
                                     value={values.pin}
                                     onChange={handleInputChange}
@@ -233,17 +242,19 @@ const Tarjeta = () => {
                                     onBlur={() => setValues(prev => ({ ...prev, focus: "" }))}
                                     required
                                     onKeyDown={handleKeyDown}
+                                    autoComplete='off'
                                 />
                                 <div className={getErrorMessageClassName('pin')}>
                                     <i className="error-icon fas fa-exclamation-circle"></i>
                                     {validationResults.pin}
                                 </div>
                             </div>
+
                             <div className="w-full flex-shrink-0">
                                 <select
                                     type="select"
                                     name="tipoDoc"
-                                    className="form-control p-2 border rounded w-full"
+                                    className="form-control p-2 border rounded w-full focus:outline-secondary"
                                     placeholder="Tipo de documento"
                                     value={values.tipoDoc}
                                     onChange={handleInputChange}
@@ -251,10 +262,11 @@ const Tarjeta = () => {
                                     onBlur={() => setValues(prev => ({ ...prev, focus: "" }))}
                                     required
                                     onKeyDown={handleKeyDown}
+                                    autoComplete='off'
                                 >
                                     <option value="">Tipo de documento</option>
                                     <option value="DNI">DNI</option>
-                                    <option value="Pasaporte">Pasaporte</option>
+                                    <option value="PASAPORTE">PASAPORTE</option>
                                 </select>
 
                                 <div className={getErrorMessageClassName('tipoDoc')}>
@@ -262,11 +274,12 @@ const Tarjeta = () => {
                                     {validationResults.tipoDoc}
                                 </div>
                             </div>
+
                             <div className="w-full flex-shrink-0">
                                 <input
                                     type="text"
                                     name="nroDoc"
-                                    className="form-control p-2 border rounded w-full"
+                                    className="form-control p-2 border rounded w-full focus:outline-secondary"
                                     placeholder="Número de documento"
                                     value={values.nroDoc}
                                     onChange={handleInputChange}
@@ -274,6 +287,7 @@ const Tarjeta = () => {
                                     onBlur={() => setValues(prev => ({ ...prev, focus: "" }))}
                                     required
                                     onKeyDown={handleKeyDown}
+                                    autoComplete='off'
                                 />
                                 <div className={getErrorMessageClassName('nroDoc')}>
                                     <i className="error-icon fas fa-exclamation-circle"></i>

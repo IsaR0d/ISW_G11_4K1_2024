@@ -66,7 +66,7 @@ const Confirmacion = () => {
         try {
             if (isTarjeta) {
                 let {ok, message, numeroPago} = await procesarPago(
-                    datosTarjeta.number,
+                    datosTarjeta.number.replace(/\s+/g, ''),
                     datosTarjeta.name,
                     datosTarjeta.expiry,
                     datosTarjeta.cvc,

@@ -23,8 +23,11 @@ export const validarNumero = (number) => {
     return sum % 10 === 0;
 }
 
-export const validateNumber = (number) =>
+export const validateNumber = (a) =>
 {
+    if (a === "") return "Este campo es requerido.";
+    
+    const number = a.replace(/\s+/g, '');
     const cardNumberRegex = /^(4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|2(2[2-9][0-9]{2}|[3-6][0-9]{3}|7([01][0-9]{2}|20[0-9]))[0-9]{12})$/;
 
     if (!cardNumberRegex.test(number) || !validarNumero(number))
@@ -37,14 +40,18 @@ export const validateNumber = (number) =>
 
 export const validateName = (name) => 
 {
+    if (name === "") return "Este campo es requerido.";
+
     return (/^[A-Za-zÀ-ÖØ-ÿ'’-]+(?: [A-Za-zÀ-ÖØ-ÿ'’-]+)*$/i.test(name)) ? true : "Ingrese un nombre válido.";
 };
 
 export const validateExpiry = (expiry) => {
+    if (expiry === "") return "Este campo es requerido.";
+
     const expiryRegex = /^(0[1-9]|1[0-2])\/([0-9]{2})$/;
     
     if (!expiryRegex.test(expiry)) {
-        return "Ingrese una fecha de expiración válida (MM/YY)";
+        return "Ingrese una fecha de expiración válida (MM/AA)";
     }
 
     const [month, year] = expiry.split('/');
@@ -64,17 +71,20 @@ export const validateExpiry = (expiry) => {
 };
 
 export const validateCvc = (number) => {
+    if (number === "") return "Este campo es requerido.";
     return (/^\d{3}$/.test(number)) ? true : "Ingrese un CVC de 3 dígitos.";
 };
 export const validatePin= (number) => {
+    if (number === "") return "Este campo es requerido.";
     return (/^\d{4}$/.test(number)) ? true : "Ingrese un PIN de 4 dígitos.";
 };
 
 export const validateTipoDoc = (tipoDoc) => {
-    return tipoDoc === "DNI" || tipoDoc === "Pasaporte" ? true : "Tipo de documento inválido";
+    return tipoDoc !== "" ? true :  "Este campo es requerido.";
 }
 
 export const validateNroDoc = (tipoDoc, nroDoc) => {
+    if (nroDoc === "") return "Este campo es requerido.";
     return tipoDoc === "DNI" ? validateDNI(nroDoc) : validatePasaporte(nroDoc);
 }
 
