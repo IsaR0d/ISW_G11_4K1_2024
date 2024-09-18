@@ -31,7 +31,16 @@ const Confirmacion = () => {
             }),
         });
 
-        if (!response.ok) {
+        if (!response.ok && response.status == 400) {
+            navigate('/error', { state: {
+                mensaje: `El pedido #ID${pedido.id} ya tiene un transportista seleccionado.`,
+                icono: "truck"
+            }});
+            return;
+        }
+
+        else if (!response.ok)
+        {
             setModalContent({
                 nombreImagen: "Fail",
                 titulo: 'Error',
@@ -39,7 +48,6 @@ const Confirmacion = () => {
                 textoBotonPrincipal: "Reintentar",
                 accionBotonPrincipal: () => window.history.back(),
             });
-            
             return;
         }
 

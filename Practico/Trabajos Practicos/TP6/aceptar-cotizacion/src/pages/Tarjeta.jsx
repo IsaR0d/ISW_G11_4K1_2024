@@ -44,7 +44,7 @@ const Tarjeta = () => {
             if (onlyNumbers[currentStep] === !isNaN(value) || !onlyNumbers[currentStep]) {
                 setValues((prev) => {
                     const newValues = { ...prev, [name]: value.toUpperCase() };
-                    validarStep(newValues);
+                    if(shouldValidate) validarStep(newValues);
                     return newValues;
                 });
             }
@@ -64,8 +64,6 @@ const Tarjeta = () => {
     };
 
     const validarStep = (updatedValues) => {
-        if (!shouldValidate) return;
-
         let validationResult;
         const field = steps[currentStep];
         let currentValidator = validators[currentStep];
