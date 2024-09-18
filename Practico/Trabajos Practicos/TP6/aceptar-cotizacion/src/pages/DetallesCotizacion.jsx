@@ -115,6 +115,7 @@ const DetallesCotizacion = () => {
                                 <img src={`/${cotizacion.transportista.nombre}_${cotizacion.transportista.apellido}.jpg`} alt="Transportista" className="w-20 h-20 rounded-full" />
                                 <div className="ml-4 flex flex-col justify-center">
                                     <div className="text-black text-md font-semibold">{cotizacion.transportista.nombre} {cotizacion.transportista.apellido}</div>
+                                    <div className="text-black text-md font-semibold">{"ID: "}{cotizacion.transportista.id}</div>
                                     <Estrellas rating={cotizacion.transportista.rating} cantidadResenas={cotizacion.transportista.cantidad_resenas} />
                                 </div>
                             </div>

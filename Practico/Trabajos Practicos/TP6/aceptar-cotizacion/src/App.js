@@ -7,6 +7,7 @@ import Confirmacion from './pages/Confirmacion';
 import Inicio from './pages/Inicio';
 import Error from './pages/Error';
 import PhoneFrame from './layout/PhoneFrame';
+import Transportista from './pages/Transportista';
 import './App.css';
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
             <Route path="/confirmacion" element={<Confirmacion />} />
             <Route path="/error" element={<Error />} />
             <Route path="/*" element={<Inicio />} />
+            <Route path="/transportista/:idTransportista" element={<Transportista />} />
           </Routes>
         </PhoneFrame>
       </div>
