@@ -5,11 +5,11 @@
 |--------|----------------------|
 | 91162  | Avalle, Agostina     |
 | 89312  | Carrizo, Ismael      |
-| 90738  | Lopez, Juan Cruz     |
+| 90738  | López, Juan Cruz     |
 | 89323  | Mengo, Martin        |
 | 89518  | Pelliza, Brian       |
-| 90867  | Rodriguez, Isauro    |
-| 90094  | Sanchez, Maximo      |
+| 90867  | Rodríguez, Isauro    |
+| 90094  | Sánchez, Máximo      |
 
 ## Estructura del repositorio
 ```
@@ -22,13 +22,14 @@ ISW-G11-4K1-2024
 |   ├── Trabajos Prácticos
 |   |   ├── TP1
 |   |   └── TP<N>
-|   └── Ejercicios
-├── Notas de Clase
-└── Trabajos de investigacion
+|   |       ├── Consultas
+|   |       └── Desarrollo
+|   └── Trabajos de investigación
+└── Notas de Clase
 ```
 ### Descripción
 1. **Material**: Contiene recursos de apoyo proporcionados por la cátedra.
-2. **Práctico**: Contiene todos los trabajos prácticos desarrollados por el grupo y ejercicios resueltos.
+2. **Práctico**: Contiene todos los trabajos desarrollados por el grupo, incluidos los trabajos prácticos (evaluables y no evaluables) y los trabajos conceptuales/de investigación. Cada trabajo tendrá únicamente las carpetas que sean necesarias.
 3. **Notas de clase**: Incluye notas tomadas durante las clases.
 
 ## Reglas de nombrado
