@@ -37,7 +37,7 @@ const Transportista = () => {
   }, [idTransportista]);
 
   const mostrarNotificacion = (mensaje) => {
-    const id = Date.now(); // Genera un ID único para la notificación
+    const id = Date.now();
     setNotificaciones((prev) => [...prev, { id, mensaje }]);
   };
 

@@ -61,7 +61,6 @@ const Tarjeta = () => {
                 const fetchedPedido = response.data.pedido;
                 const fetchedCotizacion = response.data.cotizacion;
 
-                // Verifica si el pedido ya está confirmado
                 if (fetchedPedido.estado === 'Confirmada') {
                     navigate('/error', { state: {
                         mensaje: `El pedido #ID${fetchedPedido.id} ya tiene un transportista seleccionado.`,

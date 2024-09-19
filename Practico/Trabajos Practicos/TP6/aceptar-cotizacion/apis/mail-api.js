@@ -11,15 +11,14 @@ const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
 
-// Create reusable transporter object using Hotmail SMTP
 let transporter = nodemailer.createTransport({
-    service: 'hotmail', // Change service to Hotmail
+    service: 'hotmail',
     auth: {
-        user: "tangoappisw@hotmail.com", // Replace with your Hotmail email address from environment variables
-        pass: "159951ISW"  // Replace with your Hotmail password or app password from environment variables
+        user: "tangoappisw@hotmail.com",
+        pass: "159951ISW"
     },
     tls: {
-        rejectUnauthorized: false // Sometimes needed for self-signed certificates
+        rejectUnauthorized: false
     }
 });
 
@@ -27,10 +26,10 @@ app.post('/enviar-correo', async (req, res) => {
     const { detallesPedido } = req.body;
 
     const mailOptions = {
-        from: "tangoappisw@hotmail.com", // Sender address
-        to: 'maxgamercod@gmail.com', // Receiver email
+        from: "tangoappisw@hotmail.com",
+        to: 'avalleag@gmail.com',
         subject: 'TANGO APP - Confirmación de Cotización',
-        text: detallesPedido // Email body content
+        text: detallesPedido
     };
 
     try {

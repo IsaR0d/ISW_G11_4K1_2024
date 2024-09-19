@@ -10,7 +10,6 @@ import PhoneFrame from './layout/PhoneFrame';
 import Transportista from './pages/Transportista';
 import './App.css';
 
-// Custom Hook to get window size
 const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
@@ -34,7 +33,7 @@ const useWindowSize = () => {
 
 const App = () => {
   const { width } = useWindowSize();
-  const isMobile = width < 1024; // Define your breakpoint for mobile view
+  const isMobile = width < 768;
 
   return (
     <Router>
