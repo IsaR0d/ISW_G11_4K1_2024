@@ -5,19 +5,19 @@
     "tipo_de_carga": "Electrónica",
     "retiro_direccion": "San Martín 789, Rosario",
     "retiro_fecha": "25/09/2024",
-    "estado": "Confirmada",
+    "estado": "Pendiente",
     "entrega_direccion": "Colón 234, Córdoba",
     "transportista": {
-      "id": 1,
-      "nombre": "Luis",
-      "apellido": "Alfonso",
-      "rating": 4.2,
-      "cantidad_resenas": 72,
-      "nro_telefono": "+54 9 351 772 5243",
-      "mail": "luis.alfonso@gmail.com"
+      "id": 2,
+      "nombre": "María",
+      "apellido": "Fernandez",
+      "rating": 4.8,
+      "cantidad_resenas": 120,
+      "nro_telefono": "+54 9 351 123 4567",
+      "mail": "maria.fernandez@gmail.com"
     },
-    "meotodo_pago": "Contado al retirar",
-    "precio": 3500,
+    "meotodo_pago": "Contado al entregar",
+    "precio": 4000,
     "cotizaciones": [
       {
         "id": 1,
