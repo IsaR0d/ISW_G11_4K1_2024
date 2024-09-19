@@ -59,7 +59,7 @@
     "tipo_de_carga": "Muebles",
     "retiro_direccion": "Av. Santa Fe 456, Buenos Aires",
     "retiro_fecha": "20/09/2024",
-    "estado": "Confirmada",
+    "estado": "Pendiente",
     "entrega_direccion": "Av. Las Heras 789, Mendoza",
     "entrega_fecha": "10/10/2024",
     "meotodo_pago": null,
