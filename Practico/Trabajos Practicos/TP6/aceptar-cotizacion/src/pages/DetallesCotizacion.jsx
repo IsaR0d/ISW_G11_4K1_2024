@@ -21,7 +21,6 @@ const DetallesCotizacion = () => {
                 const fetchedPedido = response.data.pedido;
                 const fetchedCotizacion = response.data.cotizacion;
 
-                // Verifica si el pedido ya está confirmado
                 if (fetchedPedido.estado === 'Confirmada') {
                     navigate('/error', { state: {
                         mensaje: `El pedido #ID${fetchedPedido.id} ya tiene un transportista seleccionado.`,
@@ -48,7 +47,6 @@ const DetallesCotizacion = () => {
 
     if (loading) return <p>Cargando...</p>;
     if (error) return <p>{error}</p>;
-    if (!cotizacion) return <p>No se encontró la cotización</p>;
 
     const handleConfirmar = () => {
         navigate('/metodo-pago', {
@@ -113,9 +111,10 @@ const DetallesCotizacion = () => {
                         <div className="text-gray-600 text-sm mb-4">Transportista</div>
                         <div className='ml-1 flex flex-col justify-center'>
                             <div className="flex mt-2 mb-2">
-                                <img src="/transportista.png" alt="Transportista" className="w-20 h-20 rounded-full" />
+                                <img src={`/${cotizacion.transportista.nombre}_${cotizacion.transportista.apellido}.jpg`} alt="Transportista" className="w-20 h-20 rounded-full" />
                                 <div className="ml-4 flex flex-col justify-center">
                                     <div className="text-black text-md font-semibold">{cotizacion.transportista.nombre} {cotizacion.transportista.apellido}</div>
+                                    <div className="text-black text-md font-semibold">{"ID: "}{cotizacion.transportista.id}</div>
                                     <Estrellas rating={cotizacion.transportista.rating} cantidadResenas={cotizacion.transportista.cantidad_resenas} />
                                 </div>
                             </div>

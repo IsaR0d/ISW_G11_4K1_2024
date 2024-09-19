@@ -1,26 +1,21 @@
 // Algoritmo de Luhn
-export const validarNumero =(number) => {
+export const validarNumero = (number) => {
 
-    const cleanNumber = number.replace(/\D/g, '');
-
-    if (cleanNumber.length < 13 || cleanNumber.length > 19) {
-        return false;
-    }
+    const sanitizedCardNumber = number.replace(/\D/g, '');
 
     let sum = 0;
     let shouldDouble = false;
 
-    for (let i = cleanNumber.length - 1; i >= 0; i--) {
-        let digit = parseInt(cleanNumber[i], 10);
+    for (let i = sanitizedCardNumber.length - 1; i >= 0; i--) {
+        let digit = parseInt(sanitizedCardNumber.charAt(i), 10);
 
         if (shouldDouble) {
             digit *= 2;
-
             if (digit > 9) {
-                digit -= 9;
+            digit -= 9;
             }
         }
-
+    
         sum += digit;
         shouldDouble = !shouldDouble;
     }
@@ -28,24 +23,77 @@ export const validarNumero =(number) => {
     return sum % 10 === 0;
 }
 
-function getMarca(number) {
-    // Eliminar espacios y guiones
-    number = number.replace(/\s+/g, '').replace(/-/g, '');
+export const validateNumber = (a) =>
+{
+    if (a === "") return "Este campo es requerido.";
+    
+    const number = a.replace(/\s+/g, '');
+    const cardNumberRegex = /^(4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|2(2[2-9][0-9]{2}|[3-6][0-9]{3}|7([01][0-9]{2}|20[0-9]))[0-9]{12})$/;
 
-    // Verificar longitud del número de tarjeta
-    if (number.length < 13 || number.length > 19) {
-        return 'Número de tarjeta inválido';
+    if (!cardNumberRegex.test(number) || !validarNumero(number))
+    {
+        return "Ingrese una tarjeta VISA o Mastercard valida."
     }
 
-    // Determinar el BIN/IIN (primeros 6 dígitos)
-    const bin = number.substring(0, 6);
+    return true;
+}
 
-    // Identificar la marca de la tarjeta
-    if (bin.startsWith('4')) {
-        return 'Visa';
-    } else if (bin.startsWith('51') || bin.startsWith('52') || bin.startsWith('53') || bin.startsWith('54') || bin.startsWith('55')) {
-        return 'Mastercard';
-    } else {
-        return 'Marca de tarjeta no reconocida';
+export const validateName = (name) => 
+{
+    if (name === "") return "Este campo es requerido.";
+
+    return (/^[A-Za-zÀ-ÖØ-ÿ'’-]+(?: [A-Za-zÀ-ÖØ-ÿ'’-]+)*$/i.test(name)) ? true : "Ingrese un nombre válido.";
+};
+
+export const validateExpiry = (expiry) => {
+    if (expiry === "") return "Este campo es requerido.";
+
+    const expiryRegex = /^(0[1-9]|1[0-2])\/([0-9]{2})$/;
+    
+    if (!expiryRegex.test(expiry)) {
+        return "Ingrese una fecha de expiración válida (MM/AA)";
     }
+
+    const [month, year] = expiry.split('/');
+    
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1;
+    const currentYear = currentDate.getFullYear() % 100;
+
+    const expiryMonth = parseInt(month, 10);
+    const expiryYear = parseInt(year, 10);
+
+    if (expiryYear < currentYear || (expiryYear === currentYear && expiryMonth < currentMonth)) {
+        return "La tarjeta debe estar vigente.";
+    }
+
+    return true;
+};
+
+export const validateCvc = (number) => {
+    if (number === "") return "Este campo es requerido.";
+    return (/^\d{3}$/.test(number)) ? true : "Ingrese un CVC de 3 dígitos.";
+};
+export const validatePin= (number) => {
+    if (number === "") return "Este campo es requerido.";
+    return (/^\d{4}$/.test(number)) ? true : "Ingrese un PIN de 4 dígitos.";
+};
+
+export const validateTipoDoc = (tipoDoc) => {
+    return tipoDoc !== "" ? true :  "Este campo es requerido.";
+}
+
+export const validateNroDoc = (tipoDoc, nroDoc) => {
+    if (nroDoc === "") return "Este campo es requerido.";
+    return tipoDoc === "DNI" ? validateDNI(nroDoc) : validatePasaporte(nroDoc);
+}
+
+export const validateDNI = (nroDoc) => {
+    return nroDoc.length === 8 && /^[0-9]+$/.test(nroDoc) ? true : "DNI inválido";
+
+}
+
+export const validatePasaporte = (nroDoc) => {
+    return nroDoc.length >= 6 && nroDoc.length <= 9 && /^[A-Z0-9]+$/.test(nroDoc) ? true : "Pasaporte inválido";
+
 }

@@ -2,11 +2,39 @@ import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CreditCardIcon, CurrencyDollarIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import Layout from '../layout/Layout';
+import axios from 'axios';
+
 
 const MetodoPago = () => {
     const { state } = useLocation();
     const { cotizacion, pedido } = state || {};
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchCotizacion = async () => {
+            try {
+                const response = await axios.get(`http://localhost:4000/api/pedido=${pedido.id}&cotizacion=${cotizacion.id}`);
+                const fetchedPedido = response.data.pedido;
+                const fetchedCotizacion = response.data.cotizacion;
+
+                if (fetchedPedido.estado === 'Confirmada') {
+                    navigate('/error', { state: {
+                        mensaje: `El pedido #ID${fetchedPedido.id} ya tiene un transportista seleccionado.`,
+                        icono: "truck"
+                    } });
+                    return;
+                }
+            } catch (err) {
+                navigate('/error', { state: {
+                    mensaje: err.response?.data?.message || 'Error desconocido',
+                    icono: "sad"
+                } });
+                return;
+            }
+        };
+
+        fetchCotizacion();
+    }, []);
 
     const getPaymentIcon = (metodo) => {
         if (metodo.toLowerCase().includes('tarjeta')) {

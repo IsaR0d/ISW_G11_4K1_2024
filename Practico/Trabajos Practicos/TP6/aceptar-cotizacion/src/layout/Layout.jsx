@@ -8,8 +8,11 @@ import {
     UserCircleIcon,
     PlusIcon,
 } from '@heroicons/react/24/outline';
+import { useNavigate } from 'react-router-dom';
 
-const Layout = ({ children, title, footerType, headerType, anteriorAccion, siguienteAccion }) => {
+const Layout = ({ children, title, footerType, headerType, anteriorAccion, siguienteAccion, inicioAccion, disableButton}) => {
+    const navigate = useNavigate();
+    
     return (
         <div className="flex flex-col flex-grow h-full w-full bg-gray-100 overflow-hidden md:relative lg: fixed">
         
@@ -19,12 +22,24 @@ const Layout = ({ children, title, footerType, headerType, anteriorAccion, sigui
                     headerType === 'default' ? 'bg-primary text-white' : 'bg-transparent'
                 }`}
             >
-                <button
+                {!disableButton && (
+                    <button
                     className={`block ${headerType === 'default' ? 'text-white' : 'text-black'}`}
-                    onClick={() => window.history.back()}
-                >
-                    <ArrowLeftIcon className="h-6 w-6" />
-                </button>
+                    onClick={ () => {
+                        if(inicioAccion){
+                            navigate("/");
+                        }
+                        else{
+                            window.history.back();
+                        }
+                        }
+                    }
+                    
+                    >
+                        <ArrowLeftIcon className="h-6 w-6" />
+                    </button>
+                )}
+                
 
                 <p className="flex-grow text-center font-semibold">{title}</p>
                 <div className="w-6"></div>
@@ -76,7 +91,7 @@ const Layout = ({ children, title, footerType, headerType, anteriorAccion, sigui
                         Anterior
                     </button>
                     <button
-                        className="text-primary mr-4 font-semibold"
+                        className={`text-primary mr-4 font-semibold disabled:text-gray-400 disabled:cursor-not-allowed`}
                         onClick={siguienteAccion}
                     >
                         Siguiente

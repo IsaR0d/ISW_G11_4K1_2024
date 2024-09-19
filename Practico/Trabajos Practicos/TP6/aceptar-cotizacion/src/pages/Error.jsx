@@ -19,7 +19,7 @@ const Error = () => {
     };
 
     return (
-        <Layout footerType={"default"} headerType={"default"}>
+        <Layout footerType={"default"} headerType={"default"} inicioAccion={true}>
             <div className="flex flex-col items-center justify-center mt-20 py-10">
 
                 {getIcon(icono)}
