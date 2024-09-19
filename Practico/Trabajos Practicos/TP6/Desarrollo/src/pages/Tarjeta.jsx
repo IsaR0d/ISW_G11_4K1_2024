@@ -138,7 +138,7 @@ const Tarjeta = () => {
     };
 
     const handleKeyDown = (e) => {
-        if (e.key === "Tab" && !validarStep(values) === true ) {
+        if (e.key === "Tab") {
             e.preventDefault();
         }
     };
