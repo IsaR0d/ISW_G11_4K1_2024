@@ -3,10 +3,12 @@ import { ref, onValue, remove } from 'firebase/database';
 import { database } from '../firebase';
 import { useParams } from 'react-router-dom';
 import Layout from '../layout/Layout';
+import Notificacion from '../components/Notificacion';
 
 const Transportista = () => {
   const { idTransportista } = useParams();
   const [pedidos, setPedidos] = useState([]);
+  const [notificaciones, setNotificaciones] = useState([]);
 
   useEffect(() => {
     console.log("idTransportista:", idTransportista);
@@ -22,10 +24,10 @@ const Transportista = () => {
         setPedidos(listaPedidos);
   
         listaPedidos.forEach((pedido) => {
-          alert(pedido.mensaje);
-  
+          mostrarNotificacion(pedido.mensaje);
           handleEliminarPedido(pedido.id);
         });
+        console.log("hola")
       } else {
         setPedidos([]);
       }
@@ -33,7 +35,11 @@ const Transportista = () => {
   
     return () => unsubscribe();
   }, [idTransportista]);
-  
+
+  const mostrarNotificacion = (mensaje) => {
+    const id = Date.now(); // Genera un ID único para la notificación
+    setNotificaciones((prev) => [...prev, { id, mensaje }]);
+  };
 
   const handleEliminarPedido = (idPedido) => {
     const pedidoRef = ref(database, `transportistas/${idTransportista}/pedidos/${idPedido}`);
@@ -46,16 +52,33 @@ const Transportista = () => {
       });
   };
 
+  const handleClickNotificacion = (id) => {
+    setNotificaciones((prev) => prev.filter((notif) => notif.id !== id));
+  };
+
   return (
     <Layout footerType={"default"} headerType={"default"} inicioAccion={true}>
-      <div className="flex flex-col items-center justify-center mt-20 py-10">
+      <div className="flex flex-col items-center justify-center mt-3 py-10 relative">
         <p className="text-lg font-semibold p-4 text-center text-black">
           {"Transportista ID: "} {idTransportista}
         </p>
+        <div className="absolute top-0 left-0 right-0 p-4">
+          {notificaciones.map((notif) => (
+            <div
+              key={notif.id}
+              onClick={() => handleClickNotificacion(notif.id)}
+              className="mb-1"
+            >
+              <Notificacion
+                title={"TANGO APP"}
+                message={notif.mensaje}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </Layout>
   );
 };
 
 export default Transportista;
-
