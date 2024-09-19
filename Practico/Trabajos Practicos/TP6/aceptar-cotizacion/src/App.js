@@ -33,6 +33,8 @@ const App = () => {
           <Route path="/tarjeta" element={<Tarjeta />} />
           <Route path="/confirmacion" element={<Confirmacion />} />
           <Route path="/error" element={<Error />} />
+          <Route path="/*" element={<Inicio />} />
+          <Route path="/transportista/:idTransportista" element={<Transportista />} />
         </Routes>
       </div>
     </Router>

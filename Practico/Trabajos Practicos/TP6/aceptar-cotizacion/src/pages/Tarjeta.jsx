@@ -5,8 +5,10 @@ import "react-credit-cards-2/dist/es/styles-compiled.css";
 import Cards from "react-credit-cards-2";
 import { IMaskInput } from 'react-imask';
 import { validateNumber, validateName, validateExpiry, validateCvc, validatePin, validateTipoDoc, validateNroDoc } from '../services/validarTarjeta';
+import axios from 'axios';
 
 const Tarjeta = () => {
+    
     const { state } = useLocation();
     const { cotizacion, pedido, metodo } = state || {};
     const [confirmar, setConfirmar] = useState(false);
@@ -44,12 +46,41 @@ const Tarjeta = () => {
             if (onlyNumbers[currentStep] === !isNaN(value) || !onlyNumbers[currentStep]) {
                 setValues((prev) => {
                     const newValues = { ...prev, [name]: value.toUpperCase() };
-                    validarStep(newValues);
+                    if (shouldValidate){
+                        validarStep(newValues);
+                    }
                     return newValues;
                 });
             }
         }
     };
+    useEffect(() => {
+        const fetchCotizacion = async () => {
+            try {
+                const response = await axios.get(`http://localhost:4000/api/pedido=${pedido.id}&cotizacion=${cotizacion.id}`);
+                const fetchedPedido = response.data.pedido;
+                const fetchedCotizacion = response.data.cotizacion;
+
+                // Verifica si el pedido ya está confirmado
+                if (fetchedPedido.estado === 'Confirmada') {
+                    navigate('/error', { state: {
+                        mensaje: `El pedido #ID${fetchedPedido.id} ya tiene un transportista seleccionado.`,
+                        icono: "truck"
+                    } });
+                    return;
+                }
+
+            } catch (err) {
+                navigate('/error', { state: {
+                    mensaje: err.response?.data?.message || 'Error desconocido',
+                    icono: "sad"
+                } });
+                return;
+            }
+        };
+
+        fetchCotizacion();
+    }, []);
 
     const handleInputFocus = (e) => {
         setValues((prev) => ({ ...prev, focus: e.target.name }));
@@ -64,8 +95,6 @@ const Tarjeta = () => {
     };
 
     const validarStep = (updatedValues) => {
-        if (!shouldValidate) return;
-
         let validationResult;
         const field = steps[currentStep];
         let currentValidator = validators[currentStep];

@@ -6,6 +6,8 @@ import { procesarPago } from '../services/procesarPago';
 import { enviarCorreoConfirmacion } from '../services/mail';
 import { ref, set } from 'firebase/database';
 import { database } from '../firebase';
+import axios from 'axios';
+import { useEffect } from 'react';
 
 const Confirmacion = () => {
     const { state } = useLocation();
@@ -14,72 +16,83 @@ const Confirmacion = () => {
     const [isModalOpen, setModalOpen] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
     const [modalContent, setModalContent] = React.useState({});
-    const isTarjeta = metodo.toLowerCase().includes('tarjeta');
+    const [isTarjeta, setIsTarjeta] = React.useState(false)
+    
+    useEffect(() => {
+        const fetchCotizacion = async () => {
+            try {
+                const response = await axios.get(`http://localhost:4000/api/pedido=${pedido.id}&cotizacion=${cotizacion.id}`);
+                const fetchedPedido = response.data.pedido;
+                const fetchedCotizacion = response.data.cotizacion;
 
-    const confirmarPedido = async (numeroPago) => {
-        try {
-            const response = await fetch("http://localhost:4000/api/confirmar", {
-                method: "PUT",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    idPedido: pedido.id,
-                    metodo_pago: metodo,
-                    entrega_fecha: cotizacion.entrega_fecha || pedido.entrega_fecha,
-                    retiro_fecha: cotizacion.retiro_fecha || pedido.retiro_fecha,
-                    transportista: cotizacion.transportista,
-                    precio: cotizacion.precio,
-                }),  
-            });
+                // Verifica si el pedido ya está confirmado
+                if (fetchedPedido.estado === 'Confirmada') {
+                    navigate('/error', { state: {
+                        mensaje: `El pedido #ID${fetchedPedido.id} ya tiene un transportista seleccionado.`,
+                        icono: "truck"
+                    } });
+                    return;
+                }
+                setIsTarjeta(metodo.toLowerCase().includes('tarjeta'));
 
-            if (!response.ok) {
-                setModalContent({
-                    nombreImagen: "Fail",
-                    titulo: 'Error',
-                    descripcion: `Ha ocurrido un error inesperado. Por favor, intente nuevamente.`,
-                    textoBotonPrincipal: "Reintentar",
-                    accionBotonPrincipal: () => window.history.back(),
-                });
+            } catch (err) {
+                navigate('/error', { state: {
+                    mensaje: err.response?.data?.message || 'Error desconocido',
+                    icono: "sad"
+                } });
                 return;
             }
+        };
 
-            const data = await response.json();
+        fetchCotizacion();
+    }, []);
+    
+    const confirmarPedido = async (numeroPago) => {
+        const response = await fetch("http://localhost:4000/api/confirmar", {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                idPedido: pedido.id,
+                metodo_pago: metodo,
+                entrega_fecha: cotizacion.entrega_fecha || pedido.entrega_fecha,
+                retiro_fecha: cotizacion.retiro_fecha || pedido.retiro_fecha,
+                transportista: cotizacion.transportista,
+                precio: cotizacion.precio,
+            }),
+        });
 
-            setModalContent({
-                nombreImagen: "Success",
-                titulo: isTarjeta ? '¡Pago exitoso!' : 'Cotización confirmada',
-                descripcion: `El pedido #ID${data.id} ha sido confirmado correctamente.` +
-                `${numeroPago ? ` Número de pago: ${numeroPago}` : ''}`,
-                textoBotonPrincipal: "Ver mi pedido",
-                accionBotonPrincipal: () => console.log(data),
-                textoBotonSecundario: 'Contactar con el transportista',
-                accionBotonSecundario: () => console.log([data.transportista.nro_telefono, data.transportista.mail]),
-            });
-            
-            await enviarCorreoConfirmacion(`Su cotización para el pedido #ID${data.id} fue aceptada. Método de pago seleccionado: ${metodo}.`);
-            
-            alert(`(Simulación de notificación push) Su cotización para el pedido #ID${data.id} fue aceptada. Método de pago seleccionado: ${metodo}.`);
+        if (!response.ok && response.status == 400) {
+            navigate('/error', { state: {
+                mensaje: `El pedido #ID${pedido.id} ya tiene un transportista seleccionado.`,
+                icono: "truck"
+            }});
+            return;
+        }
+        
+        
 
-            const pedidoRef = ref(database, 'transportistas/' + cotizacion.transportista.id + '/pedidos/' + data.id);
+        const data = await response.json();
+        const pedidoRef = ref(database, 'transportistas/' + cotizacion.transportista.id + '/pedidos/' + data.id);
             await set(pedidoRef, {
                 idPedido: data.id,
                 precio: data.precio,
-                mensaje: `Se aceptó su cotización del pedido: ${data.id}, por el monto de: ${data.precio}`})
-
-            
-
-        } catch (error) {
-            setModalContent({
-                nombreImagen: 'Fail',
-                titulo: 'Error',
-                descripcion: 'No se pudo confirmar el pedido. Inténtalo nuevamente.',
-                textoBotonPrincipal: 'Reintentar',
-                accionBotonPrincipal: () => window.history.back(),
-            });
-        } finally {
-            setLoading(false);
-        }
+                formaPago: metodo,
+                mensaje: `Se aceptó su cotización del pedido: ${data.id}, con el método: ${metodo}`})
+        setModalContent({
+            nombreImagen: "Success",
+            titulo: isTarjeta ? '¡Pago exitoso!' : 'Cotización confirmada',
+            descripcion: `El pedido #ID${data.id} ha sido confirmado correctamente.` +
+            `${numeroPago ? `Número de pago: ${numeroPago}` : ''}`,
+            textoBotonPrincipal: "Ver mi pedido",
+            accionBotonPrincipal: () => console.log(data),
+            textoBotonSecundario: 'Contactar con el transportista',
+            accionBotonSecundario: () => console.log([data.transportista.nro_telefono, data.transportista.mail]),
+        });
+        
+        await enviarCorreoConfirmacion(`Su cotización para el pedido #ID${data.id} fue aceptada. Método de pago seleccionado: ${metodo}.`);
+        
     }
 
     const handleConfirmar = async () => {
@@ -96,7 +109,8 @@ const Confirmacion = () => {
                     datosTarjeta.nroDoc,
                     cotizacion.precio);
 
-                if (!ok) {
+                if(!ok)
+                {
                     setModalContent({
                         nombreImagen: "Fail",
                         titulo: "Pago no realizado",
@@ -106,12 +120,15 @@ const Confirmacion = () => {
                         textoBotonSecundario: "Elegir otro medio de pago",
                         accionBotonSecundario: () => navigate(-2)
                     });
-                } else {
-                    confirmarPedido(numeroPago);
                 }
-            } else {
-                confirmarPedido();
+                else {
+                    await confirmarPedido(numeroPago);
+                }
             }
+            else {
+                await confirmarPedido();
+            }
+    
         } catch (error) {
             setModalContent({
                 nombreImagen: 'Fail',
@@ -123,6 +140,7 @@ const Confirmacion = () => {
         } finally {
             setLoading(false);
         }
+    
         setModalOpen(true);
     };
 

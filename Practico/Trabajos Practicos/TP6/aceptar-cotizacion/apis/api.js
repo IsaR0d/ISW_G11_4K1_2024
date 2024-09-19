@@ -96,12 +96,20 @@ app.put('/api/confirmar', (req, res) => {
         if (transportista !== undefined) pedido.transportista = transportista;
         if (precio !== undefined) pedido.precio = precio;
 
-        pedido.estado = "Confirmada";
+        if(pedido.estado == "Confirmada")
+        {
+            res.status(400).json({message: "El pedido ya se encuentra cotizado."});
+        }
+        else {
+            pedido.estado = "Confirmada";
 
-        data[pedidoIndex] = pedido;
-        writeData(data);
-        
-        res.json(pedido);
+            data[pedidoIndex] = pedido;
+            writeData(data);
+            
+            res.json(pedido);
+        }
+
+
     } else {
         res.status(404).json({ message: 'Pedido no encontrado' });
     }
@@ -112,7 +120,7 @@ app.patch('/api/tarjetas', (req, res) => {
     const cards = readCards();
     const cardIdx =  cards.findIndex(c => c.numero.toString() == number.toString());;
     
-
+    console.log(number, name, expiry, cvc, pin, tipoDoc, nroDoc, monto)
     if (cardIdx != -1) {
         let card = cards[cardIdx];
         if(card.numero != number.toString()
@@ -120,8 +128,8 @@ app.patch('/api/tarjetas', (req, res) => {
                 || card.expiracion != expiry.toString()
                 || card.pin != pin.toString() 
                 || card.cvc != cvc.toString()
-                || card.tipoDoc != tipoDoc.toString()
-                || card.nroDoc != nroDoc.toString())
+                || card.tipoDoc.toUpperCase() != tipoDoc.toString().toUpperCase()
+                || card.nroDoc.toUpperCase() != nroDoc.toString().toUpperCase())
         {
             res.status(400).json({message: "Los datos de la tarjeta son incorrectos."})
         }

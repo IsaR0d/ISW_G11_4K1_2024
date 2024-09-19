@@ -8,16 +8,16 @@
     "estado": "Confirmada",
     "entrega_direccion": "Colón 234, Córdoba",
     "transportista": {
-      "id": 2,
-      "nombre": "María",
-      "apellido": "Fernandez",
-      "rating": 4.8,
-      "cantidad_resenas": 120,
-      "nro_telefono": "+54 9 351 123 4567",
-      "mail": "maria.fernandez@gmail.com"
+      "id": 1,
+      "nombre": "Luis",
+      "apellido": "Alfonso",
+      "rating": 4.2,
+      "cantidad_resenas": 72,
+      "nro_telefono": "+54 9 351 772 5243",
+      "mail": "luis.alfonso@gmail.com"
     },
-    "meotodo_pago": "Contado al entregar",
-    "precio": 4000,
+    "meotodo_pago": "Contado al retirar",
+    "precio": 3500,
     "cotizaciones": [
       {
         "id": 1,
@@ -71,15 +71,15 @@
     "entrega_direccion": "Av. Las Heras 789, Mendoza",
     "entrega_fecha": "10/10/2024",
     "meotodo_pago": "Contado al retirar",
-    "precio": 5000,
+    "precio": 3000,
     "transportista": {
-      "id": 2,
-      "nombre": "María",
-      "apellido": "Fernandez",
-      "rating": 4.8,
-      "cantidad_resenas": 120,
-      "nro_telefono": "+54 9 351 123 4567",
-      "mail": "maria.fernandez@gmail.com"
+      "id": 1,
+      "nombre": "Luis",
+      "apellido": "Alfonso",
+      "rating": 4.2,
+      "cantidad_resenas": 72,
+      "nro_telefono": "+54 9 351 772 5243",
+      "mail": "luis.alfonso@gmail.com"
     },
     "cotizaciones": [
       {
