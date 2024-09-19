@@ -9,8 +9,8 @@ const firebaseConfig = {
     storageBucket: "tp-isw-288fe.appspot.com",
     messagingSenderId: "956080042853",
     appId: "1:956080042853:web:b709618fbde1f2dc5e278c"
-  };
-  
+};
+
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
