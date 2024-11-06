@@ -61,7 +61,7 @@ ISW-G11-4K1-2024
 
 ## Definición de la Línea Base
 ### Momento en el que se definirá una nueva línea base
-Una vez que se haya entregado un Trabajo Práctico, se fijará una línea base para asegurar que toda la documentación y el código reflejen el estado del cursado en ese momento.
+Una vez que se haya entregado un Trabajo Grupal, se fijará una línea base para asegurar que toda la documentación y el código reflejen el estado del cursado en ese momento.
 
 ### Criterios
 1. **Material actualizado**
