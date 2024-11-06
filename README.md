@@ -42,6 +42,7 @@ ISW-G11-4K1-2024
 | Template | `ISW_Template_<NombreTemplate>.<ext>` | `/Material/Templates/` |
 | Consigna TP | `ISW_TP<N>_Consigna.pdf` | `/Práctico/Trabajos Prácticos/TP<N>/`
 | Entregable TP | `ISW_4K1_G11_TP<N>.pdf` | `/Práctico/Trabajos Prácticos/TP<N>/`
+| Trabajo de Investigación Grupal | `ISW_4K1_G11_TIG<N>.pdf` | `/Práctico/Trabajos De Investigacion/`
 | Ejercicio | `ISW_Ejercicio_<NombreEjercicio>.pdf` | `/Práctico/Ejercicios/` |
 | Nota de clase | `ISW_NC_<Fecha>.pdf` | `/Notas de clase/` |
 
